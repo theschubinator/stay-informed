@@ -1,3 +1,15 @@
 <h1> <%= current_user.email %> Tasks</h1>
 
 <%= link_to "New Task", new_user_task_path(current_user) %>
+
+<ol>
+<% @tasks.each do |task| %>
+  <li>
+  Name: <%= task.name %><br>
+  Description: <%= task.description %><br>
+  Completed?: <%= task.complete %><br>
+  <%binding.pry %>
+  Due Date: <%= task.formatted_date(task.due_date) %><br> 
+  </li>
+<% end %>
+</ol>

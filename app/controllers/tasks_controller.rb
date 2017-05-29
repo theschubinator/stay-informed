@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
 	def index
+		@tasks = user_tasks
 	end
 
 	def new
