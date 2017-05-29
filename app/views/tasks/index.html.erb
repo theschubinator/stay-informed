@@ -8,8 +8,7 @@
   Name: <%= task.name %><br>
   Description: <%= task.description %><br>
   Completed?: <%= task.complete %><br>
-  <%binding.pry %>
   Due Date: <%= task.formatted_date(task.due_date) %><br> 
-  </li>
+  </li><br>
 <% end %>
 </ol>
