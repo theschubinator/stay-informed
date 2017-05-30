@@ -1,5 +1,7 @@
 <h1> <%= current_user.email %> Tasks</h1>
 
+<%= render "users/admin_tools" if current_user.admin? %>
+
 <%= link_to "New Task", new_user_task_path(current_user) %>
 
 <% if @overdue_tasks_count > 0 %>

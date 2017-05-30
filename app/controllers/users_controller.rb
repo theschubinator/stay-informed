@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+	# Could not authenticate you from Facebook because "Csrf detected".
 	def show
 		if current_user == User.find_by(id: params[:id])
 		  @user = current_user
