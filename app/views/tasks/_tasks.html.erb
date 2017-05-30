@@ -8,7 +8,7 @@
   <b>Name:</b> <%= task.name %><br>
   <b>Categories</b> <%= list_task_categories(task) %><br>
   <b>Description:</b> <%= task.description %><br>
-  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br> 
-  </li><br>
+  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %> - 
+  <%= link_to "View Task", user_task_path(current_user, task) %></li><br>
 <% end %>
 </ol>

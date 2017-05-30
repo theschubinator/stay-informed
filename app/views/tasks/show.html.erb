@@ -1,0 +1,5 @@
+<h1><%= @task.name %></h1>
+
+<h4><%= @task.formatted_date(@task.due_date) %> - <%= list_task_categories(@task) %></h4>
+
+<p><%= @task.description %></p>
