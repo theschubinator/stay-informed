@@ -10,5 +10,13 @@ module TasksHelper
 	def overdue_tasks_count(user)
 		Task.overdue_tasks(user.tasks).count
 	end
+
+	def task_added_by?(task)
+		if task.grouped
+			"Admin"
+		else
+			task.user.email
+		end
+	end
 	
 end
