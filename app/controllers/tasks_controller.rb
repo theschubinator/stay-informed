@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 	def index
 		@incomplete_tasks = Task.incompleted(user_tasks)
 		@completed_tasks = Task.completed(user_tasks)
-		@overdue_tasks = Task.overdue_tasks(user_tasks)
+		@overdue_tasks_count = Task.overdue_tasks(user_tasks).size
 	end
 
 	def new
