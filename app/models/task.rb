@@ -6,17 +6,12 @@ class Task < ApplicationRecord
 
 	validates :name, :description, :categories, presence: true
 	validate :date?
-	#validate :category?
 
 	def date?
 	  if Time.now > due_date
 	  	errors.add(:due_date, "must be after current time.")
 	  end
 	end
-
-	def category?
-		binding.pry
-	end 
 
 	def formatted_date(date)
 		due_date.strftime("%a. %B, %e %Y at %I:%M%p")

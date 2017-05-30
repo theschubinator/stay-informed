@@ -17,6 +17,6 @@
   <%= f.text_area :description, size: "40x10" %><br><br>
 
   <%= f.label :due_date %>:
-  <%= f.datetime_select :due_date, ampm: true, default: 5.days.from_now %> <br><br>
+  <%= f.datetime_select :due_date, ampm: true, default: 1.hour.from_now %> <br><br>
 
   <%= f.submit %>

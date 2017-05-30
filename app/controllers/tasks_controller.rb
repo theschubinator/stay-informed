@@ -1,46 +1,86 @@
 class TasksController < ApplicationController
 	def index
-		@incomplete_tasks = Task.incompleted(user_tasks)
-		@completed_tasks = Task.completed(user_tasks)
-		@overdue_tasks_count = Task.overdue_tasks(user_tasks).size
-	end
-
-	def new
-		@task = Task.new
-	end
-
-	def create
-		@task = user_tasks.build(task_params)
-		if @task.save
-		  redirect_to user_tasks_path(current_user)
+		if user_authorized?
+		  @incomplete_tasks = Task.incompleted(user_tasks)
+		  @completed_tasks = Task.completed(user_tasks)
+		  @overdue_tasks_count = Task.overdue_tasks(user_tasks).size
 		else
-		  flash[:alert] = @task.errors.full_messages.join(" & ")
-		  render 'new'
+			flash[:alert] = "You do not have the authorization to view this page."
+			redirect_to root_path
 		end
 	end
 
+	def new
+		if user_authorized?
+		  @task = Task.new
+		else
+		  	flash[:alert] = "You do not have the authorization to view this page."
+			redirect_to root_path
+		end
+	end
+
+	def create
+		if user_authorized?
+		  @task = user_tasks.build(task_params)
+		  if @task.save
+		    redirect_to user_tasks_path(current_user)
+		  else
+	        flash[:alert] = @task.errors.full_messages.join(" & ")
+			render 'new'
+		  end
+	    else
+	      flash[:alert] = "You do not have the authorization to view this page."
+		  redirect_to root_path
+	    end
+	end
+
 	def show
-		@task = Task.find(params[:id])
+		if user_authorized?
+		  find_task
+		else
+		  flash[:alert] = "You do not have the authorization to view this page."
+		  redirect_to root_path
+		end
 	end
 
 	def edit
-		@task = Task.find(params[:id])
+	  if user_authorized?
+		find_task
+	  else
+	    flash[:alert] = "You do not have the authorization to view this page."
+		redirect_to root_path
+	  end
 	end
 
 	def update
-		@task = Task.find(params[:id])
+	  if user_authorized?
+		find_task
 		@task.update(task_params)
 		redirect_to user_tasks_path(current_user)
+	  else
+	  	flash[:alert] = "You do not have the authorization to view this page."
+		redirect_to root_path
+	  end
 	end
 
 	def destroy
-		@task = Task.find(params[:id])
-		@task.destroy
-		redirect_to user_tasks_path(current_user)
+		if user_authorized?
+		  find_task
+		  @task.destroy
+		  redirect_to user_tasks_path(current_user)
+		else
+		  flash[:alert] = "You do not have the authorization to view this page."
+		  redirect_to root_path
+		end
 	end
 
 	def completed_tasks
+	  if user_authorized?
 	  	@completed_tasks = Task.completed(user_tasks)
+	  else
+	  	flash[:alert] = "You do not have the authorization to view this page."
+		redirect_to root_path
+	  end
 	end
 
 	private
@@ -50,5 +90,9 @@ class TasksController < ApplicationController
 
 	  def user_tasks
 	  	current_user.tasks
+	  end
+
+	  def find_task
+	  	@task = Task.find(params[:id])
 	  end
 end
