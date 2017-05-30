@@ -2,8 +2,8 @@ class UsersController < ApplicationController
 
 	# Could not authenticate you from Facebook because "Csrf detected".
 	def show
-		if current_user == User.find_by(id: params[:id])
-		  @user = current_user
+		if current_user == User.find_by(id: params[:id]) || current_user.admin?
+		  @user = User.find(params[:id])
 		else
 		  flash[:alert] = "You do not have the authorization to view this page."
 		  redirect_to root_path

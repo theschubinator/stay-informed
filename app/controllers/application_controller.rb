@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_authorized?
-  	(current_user == User.find_by(id: params[:user_id]))
+  	(current_user == User.find_by(id: params[:user_id])) || current_user.admin
   end
 end
