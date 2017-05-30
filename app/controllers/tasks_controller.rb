@@ -9,6 +9,7 @@ class TasksController < ApplicationController
 	end
 
 	def create
+		#binding.pry
 		user_tasks.build(task_params)
 		current_user.save
 		redirect_to user_tasks_path(current_user)
