@@ -14,7 +14,7 @@ class Task < ApplicationRecord
 
 
 
-	def self.sorted_by_due_date(tasks)
-		tasks.sort_by {|task| task.due_date }
+	def self.sorted_by_due_date(user_tasks)
+		user_tasks.sort_by {|task| task.due_date }
 	end
 end
