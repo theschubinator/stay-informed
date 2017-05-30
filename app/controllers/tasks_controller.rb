@@ -10,9 +10,13 @@ class TasksController < ApplicationController
 	end
 
 	def create
-		user_tasks.build(task_params)
-		current_user.save
-		redirect_to user_tasks_path(current_user)
+		@task = user_tasks.build(task_params)
+		if @task.save
+		  redirect_to user_tasks_path(current_user)
+		else
+		  flash[:alert] = @task.errors.full_messages.join(" & ")
+		  render 'new'
+		end
 	end
 
 	def show

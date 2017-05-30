@@ -3,6 +3,15 @@ class Task < ApplicationRecord
 	has_many :category_tasks
 	has_many :categories, through: :category_tasks
 
+	validates :name, :description, presence: true
+	validate :date?
+
+	def date?
+	  if Time.now > due_date
+	  	errors.add(:due_date, "must be after current time.")
+	  end
+	end
+
 	def formatted_date(date)
 		due_date.strftime("%a. %B, %e %Y at %I:%M%p")
 	end
@@ -13,7 +22,6 @@ class Task < ApplicationRecord
 	end
 
 	def category_ids=(category_ids)
-		binding.pry
 		category_ids.each do |category_id|
 			if !category_id.empty?
 			  category = Category.find(category_id)
@@ -21,8 +29,6 @@ class Task < ApplicationRecord
 			end
 		end
 	end
-
-
 
 	def self.sorted_by_due_date(user_tasks)
 		user_tasks.sort_by {|task| task.due_date }
