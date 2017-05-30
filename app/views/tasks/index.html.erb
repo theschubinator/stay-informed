@@ -3,14 +3,14 @@
 <%= link_to "New Task", new_user_task_path(current_user) %>
 
 <h3>Current Tasks</h3>
-<% if @incomplete_tasks %>
+<% if !@incomplete_tasks.empty? %>
   <%= render "tasks", tasks: @incomplete_tasks %>
 <% else %>
   <p>Congrats! All Tasks are completed at this time!</p>
 <% end %>
 
 <h3>Completed Tasks</h3>
-<% if @completed_tasks %>
+<% if !@completed_tasks.empty? %>
   <%= render "tasks", tasks: @completed_tasks[0..4] %>
 <% else %>
   <p>You haven't completed any tasks yet!</p>
