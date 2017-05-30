@@ -2,9 +2,11 @@ class Task < ApplicationRecord
 	belongs_to :user
 	has_many :category_tasks
 	has_many :categories, through: :category_tasks
+    accepts_nested_attributes_for :categories
 
-	validates :name, :description, presence: true
+	validates :name, :description, :categories, presence: true
 	validate :date?
+	#validate :category?
 
 	def date?
 	  if Time.now > due_date
@@ -12,13 +14,21 @@ class Task < ApplicationRecord
 	  end
 	end
 
+	def category?
+		binding.pry
+	end 
+
 	def formatted_date(date)
 		due_date.strftime("%a. %B, %e %Y at %I:%M%p")
 	end
 
-	def category=(category)
-		new_category = Category.find_or_create_by(category)
-		self.categories << new_category
+	def categories_attributes=(categories_attributes)
+		categories_attributes.values.each do |categories_attribute|
+			if !categories_attribute[:name].empty?
+			  category = Category.find_or_create_by(categories_attribute)
+			  self.categories << category
+			end
+		end	
 	end
 
 	def category_ids=(category_ids)
