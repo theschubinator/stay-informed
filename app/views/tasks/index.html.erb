@@ -16,4 +16,4 @@
   <p>You haven't completed any tasks yet!</p>
 <% end %>
 
-<%= link_to "View All Completed Tasks" %> 
+<%= link_to "View All Completed Tasks", user_completed_tasks_path(current_user) %> 

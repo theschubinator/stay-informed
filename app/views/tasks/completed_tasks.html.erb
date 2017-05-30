@@ -1,0 +1,6 @@
+<h1>Completed Tasks</h1>
+<% if @completed_tasks %>
+  <%= render "tasks", tasks: @completed_tasks %>
+<% else %>
+  <p>You haven't completed any tasks yet!</p>
+<% end %>

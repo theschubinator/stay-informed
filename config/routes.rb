@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :tasks
+    get "/completed_tasks", to: "tasks#completed_tasks", as: "completed_tasks"
   end
   
   root "static#index"
