@@ -1,0 +1,5 @@
+<% if @user.admin? %>
+<%= f.check_box :role, checked_value: '1', unchecked_value: '0', checked: 'checked' %>
+<% else %>
+<%= f.check_box :role, checked_value: '1', unchecked_value: '0' %>
+<% end %>

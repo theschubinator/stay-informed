@@ -7,4 +7,11 @@ class UsersController < ApplicationController
 		  redirect_to root_path
 		end
 	end
+
+	def update
+		@user = User.find(params[:id])
+		@user.role = params[:user][:role].to_i
+		@user.save
+		redirect_to user_path(@user)
+	end
 end
