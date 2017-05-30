@@ -67,5 +67,15 @@ class Task < ApplicationRecord
 		end
 		over_due_tasks
 	end
+
+	def self.grouped
+		@tasks = []
+		self.all.collect do |task|
+			if task.grouped && task.name
+				@tasks << task
+			end
+		end
+		@tasks
+	end
 	
 end

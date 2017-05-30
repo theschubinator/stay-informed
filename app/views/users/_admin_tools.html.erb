@@ -1,4 +1,4 @@
 <h5>Admin Tools:
 <%= link_to "View Users", admin_users_path(current_user) %> |
 <%= link_to "Create Group Tasks", new_admin_task_path(current_user) %> |
-<%= link_to "View Group Tasks" %></h5>
+<%= link_to "View Group Tasks", admin_group_tasks_path(current_user) %></h5>

@@ -1,6 +1,6 @@
   <%= f.label :name %><br>
   <%= f.text_field :name, size: "40" %><br><br>
-  
+
   <p>Select Users</p>
   <%= f.collection_check_boxes :user_id, User.all, :id, :email %><br><br>
 
@@ -21,5 +21,7 @@
 
   <%= f.label :due_date %>:
   <%= f.datetime_select :due_date, ampm: true, default: 1.hour.from_now %> <br><br>
+
+  <%= f.hidden_field :grouped, value: true %>
 
   <%= f.submit %>

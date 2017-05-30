@@ -23,9 +23,13 @@ class AdminController < ActionController::Base
 	  redirect_to user_tasks_path(current_user)		  
 	end
 
+	def group_tasks
+		@tasks = Task.grouped
+	end
+
 	private
 	  def task_params
-	  	params.require(:task).permit(:name, :description, :complete, :"due_date(1i)", :"due_date(2i)", :"due_date(3i)", :"due_date(4i)", :"due_date(5i)", category_ids: [], categories_attributes: [:name])
+	  	params.require(:task).permit(:name, :grouped, :description, :complete, :"due_date(1i)", :"due_date(2i)", :"due_date(3i)", :"due_date(4i)", :"due_date(5i)", category_ids: [], categories_attributes: [:name])
 	  end
 
 	  def user_group
