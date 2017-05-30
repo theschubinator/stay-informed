@@ -3,3 +3,5 @@
 <h4><%= @task.formatted_date(@task.due_date) %> - <%= list_task_categories(@task) %></h4>
 
 <p><%= @task.description %></p>
+
+<%= link_to "Edit Task", edit_user_task_path(current_user, @task) %>
