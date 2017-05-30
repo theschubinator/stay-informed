@@ -15,6 +15,11 @@ class Task < ApplicationRecord
 
 
 	def self.sorted_by_due_date(user_tasks)
-		user_tasks.sort_by {|task| task.due_date }
+		incomplete_tasks = user_tasks.collect { |task| task if !task.complete }
+		if incomplete_tasks.empty?
+		  incomplete_tasks.sort_by {|task| task.due_date }
+		else
+			@no_tasks = "Congrats! All Tasks are completed at this time!"
+		end
 	end
 end

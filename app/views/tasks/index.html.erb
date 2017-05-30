@@ -2,6 +2,7 @@
 
 <%= link_to "New Task", new_user_task_path(current_user) %>
 
+<% if @task %>
 <ol>
 <% @tasks.each do |task| %>
   <li>
@@ -9,10 +10,6 @@
     <%= f.check_box :complete %>
     <%= f.submit "Complete Task" %>
   <% end %>
-
-
-
-
   Name: <%= task.name %><br>
   Categories <%= list_task_categories(task) %><br>
   Description: <%= task.description %><br>
@@ -21,3 +18,6 @@
   </li><br>
 <% end %>
 </ol>
+<% else %>
+  <p>Congrats! All Tasks are completed at this time!</p>
+<% end %>
