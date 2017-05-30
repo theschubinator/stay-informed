@@ -28,6 +28,12 @@ class TasksController < ApplicationController
 		redirect_to user_tasks_path(current_user)
 	end
 
+	def destroy
+		@task = Task.find(params[:id])
+		@task.destroy
+		redirect_to user_tasks_path(current_user)
+	end
+
 	def completed_tasks
 	  	@completed_tasks = Task.completed(user_tasks)
 	end

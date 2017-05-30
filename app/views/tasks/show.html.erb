@@ -5,3 +5,4 @@
 <p><%= @task.description %></p>
 
 <%= link_to "Edit Task", edit_user_task_path(current_user, @task) %>
+<%= link_to "Delete Task",  user_task_path(current_user, @task), method: :delete %>
