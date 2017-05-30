@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
 	def index
-		@tasks = Task.sorted_by_due_date(user_tasks)
+		@incomplete_tasks = Task.incompleted(user_tasks)
+		@completed_tasks = Task.completed(user_tasks)
 	end
 
 	def new

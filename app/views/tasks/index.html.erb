@@ -2,22 +2,18 @@
 
 <%= link_to "New Task", new_user_task_path(current_user) %>
 
-<% if @task %>
-<ol>
-<% @tasks.each do |task| %>
-  <li>
-  <%= form_for task, url: user_task_path(current_user, task) do |f| %>
-    <%= f.check_box :complete %>
-    <%= f.submit "Complete Task" %>
-  <% end %>
-  Name: <%= task.name %><br>
-  Categories <%= list_task_categories(task) %><br>
-  Description: <%= task.description %><br>
-  Completed?: <%= task.complete %><br>
-  Due Date: <%= task.formatted_date(task.due_date) %><br> 
-  </li><br>
-<% end %>
-</ol>
+<h3>Current Tasks</h3>
+<% if @incomplete_tasks %>
+  <%= render "tasks", tasks: @incomplete_tasks %>
 <% else %>
   <p>Congrats! All Tasks are completed at this time!</p>
 <% end %>
+
+<h3>Completed Tasks</h3>
+<% if @completed_tasks %>
+  <%= render "tasks", tasks: @completed_tasks[0..4] %>
+<% else %>
+  <p>You haven't completed any tasks yet!</p>
+<% end %>
+
+<%= link_to "View All Completed Tasks" %> 

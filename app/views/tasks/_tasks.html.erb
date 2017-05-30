@@ -1,0 +1,14 @@
+<ol>
+<% tasks.each do |task| %>
+  <li>
+  <%= form_for task, url: user_task_path(current_user, task) do |f| %>
+    <%= f.check_box :complete %>
+    <%= f.submit "Complete Task" %>
+  <% end %>
+  <b>Name:</b> <%= task.name %><br>
+  <b>Categories</b> <%= list_task_categories(task) %><br>
+  <b>Description:</b> <%= task.description %><br>
+  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br> 
+  </li><br>
+<% end %>
+</ol>
