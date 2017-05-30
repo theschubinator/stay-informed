@@ -67,5 +67,5 @@ class Task < ApplicationRecord
 		end
 		over_due_tasks
 	end
-
+	
 end

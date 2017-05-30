@@ -1,0 +1,5 @@
+<h1>New Group Task</h1>
+
+<%= form_for(@task, url: admin_task_path(current_user)) do |f| %>
+  <%= render "form", f: f %>
+<% end %>
