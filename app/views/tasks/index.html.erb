@@ -5,6 +5,14 @@
 <ol>
 <% @tasks.each do |task| %>
   <li>
+  <%= form_for task, url: user_task_path(current_user, task) do |f| %>
+    <%= f.check_box :complete %>
+    <%= f.submit "Complete Task" %>
+  <% end %>
+
+
+
+
   Name: <%= task.name %><br>
   Categories <%= list_task_categories(task) %><br>
   Description: <%= task.description %><br>
