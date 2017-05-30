@@ -2,6 +2,7 @@ class TasksController < ApplicationController
 	def index
 		@incomplete_tasks = Task.incompleted(user_tasks)
 		@completed_tasks = Task.completed(user_tasks)
+		@overdue_tasks = Task.overdue_tasks(user_tasks)
 	end
 
 	def new
@@ -9,7 +10,6 @@ class TasksController < ApplicationController
 	end
 
 	def create
-		#binding.pry
 		user_tasks.build(task_params)
 		current_user.save
 		redirect_to user_tasks_path(current_user)

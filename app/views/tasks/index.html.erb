@@ -2,6 +2,10 @@
 
 <%= link_to "New Task", new_user_task_path(current_user) %>
 
+<% if !@overdue_tasks.empty? %>
+<p>You have <%= @overdue_tasks.size %> overdue <%= 'task'.pluralize(@overdue_tasks.size) %>.</p>
+<% end %>
+
 <h3>Current Tasks</h3>
 <% if !@incomplete_tasks.empty? %>
   <%= render "tasks", tasks: @incomplete_tasks %>

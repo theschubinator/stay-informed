@@ -46,4 +46,15 @@ class Task < ApplicationRecord
 		completed_tasks
 	end
 
+	def self.overdue_tasks(user_tasks)
+		tasks = self.incompleted(user_tasks)
+		over_due_tasks = []
+		tasks.each do |task|
+			if Time.current > task.due_date
+				over_due_tasks << task
+			end
+		end
+		over_due_tasks
+	end
+
 end
