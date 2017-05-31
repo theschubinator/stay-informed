@@ -1,13 +1,12 @@
-<h1> <%= current_user.email %> Tasks</h1>
+<h1> Welcome, <%= current_user.email %> </h1>
 
 <%= render "users/admin_tools" if current_user.admin? %>
 
+<p>View Tasks By Category: <%= render "category_links" %></p>
+
+<p><b><%= render "overdue_task_message" %></b></p>
+
 <%= link_to "New Task", new_user_task_path(current_user) %>
-
-<% if overdue_tasks_count(current_user) > 0 %>
-<p>You have <%= overdue_tasks_message(current_user) %>.</p>
-<% end %>
-
 
 <h3>Current Tasks</h3>
 <% if !@incomplete_tasks.empty? %>

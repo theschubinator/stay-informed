@@ -1,0 +1,3 @@
+<% if overdue_tasks_count(current_user) > 0 %>
+<p>You have <%= overdue_tasks_message(current_user) %>!!!</p>
+<% end %>

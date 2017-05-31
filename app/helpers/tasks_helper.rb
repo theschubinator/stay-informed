@@ -18,5 +18,9 @@ module TasksHelper
 			task.user.email
 		end
 	end
+
+	def uniq_categories(user)
+		user.categories.collect { |category| category }.uniq
+	end
 	
 end
