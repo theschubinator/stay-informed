@@ -39,21 +39,13 @@ class Task < ApplicationRecord
 	end
 
 	def self.incompleted(user_tasks)
-		tasks = self.sorted_by_due_date(user_tasks)
-		incomplete_tasks = []
-		tasks.each do |task|
-			incomplete_tasks << task if !task.complete
-	    end
-	    incomplete_tasks
+		 incomplete_tasks = user_tasks.where("complete = ?", false)
+		 incomplete_tasks.sort_by { |task| task.due_date }
 	end
 
 	def self.completed(user_tasks)
-		tasks = self.sorted_by_due_date(user_tasks)
-		completed_tasks = []
-		tasks.each do |task|
-			completed_tasks << task if task.complete
-		end
-		completed_tasks
+		completed_tasks = user_tasks.where("complete = ?", true)
+		completed_tasks.sort_by { |task| task.due_date }
 	end
 
 	def self.overdue_tasks(user_tasks)
