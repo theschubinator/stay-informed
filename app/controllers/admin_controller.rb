@@ -11,25 +11,40 @@ class AdminController < ActionController::Base
 	end
 
 	def new_task
-		@task = Task.new
+		if current_user.admin?
+		  @task = Task.new
+		else
+		  flash[:alert] = "You do not have the authorization to view this page."
+	      redirect_to root_path
+	    end
 	end
 
 	def create_task
-	  user_group.each do |user_id|
-	  	if !user_id.empty?
-	  		user = User.find(user_id)
-	  		user.tasks.build(task_params)
-	  		if !user.save
-	  		  flash[:alert] = user.tasks.last.errors.full_messages.join(" & ")
-			  redirect_to new_admin_task_path(current_user) and return
-		    end
-	  	end
-	  end
-	  redirect_to user_tasks_path(current_user)		  
+	  if current_user.admin?
+		  user_group.each do |user_id|
+		  	if !user_id.empty?
+		  		user = User.find(user_id)
+		  		user.tasks.build(task_params)
+		  		if !user.save
+		  		  flash[:alert] = user.tasks.last.errors.full_messages.join(" & ")
+				  redirect_to new_admin_task_path(current_user) and return
+			    end
+		  	end
+		  end
+		  redirect_to user_tasks_path(current_user)		
+	   else  
+	     flash[:alert] = "You do not have the authorization to view this page."
+	     redirect_to root_path
+	   end
 	end
 
 	def group_tasks
-		@tasks = Task.grouped
+		if current_user.admin?
+		  @tasks = Task.grouped
+		else
+		  flash[:alert] = "You do not have the authorization to view this page."
+	      redirect_to root_path
+	    end
 	end
 
 	private
