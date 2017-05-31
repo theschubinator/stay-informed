@@ -30,7 +30,7 @@ class Task < ApplicationRecord
 		category_ids.each do |category_id|
 			if !category_id.empty?
 			  category = Category.find(category_id)
-			  self.categories << category
+			  self.categories << category if !self.categories.include?(category)
 			end
 		end
 	end
