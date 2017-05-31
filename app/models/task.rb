@@ -7,16 +7,14 @@ class Task < ApplicationRecord
 	validates :name, :description, :categories, presence: true
 	validate :date?
 
+	## validations ##
 	def date?
 	  if Time.now > due_date
 	  	errors.add(:due_date, "must be after current time.")
 	  end
 	end
 
-	def formatted_date(date)
-		due_date.strftime("%a. %B, %e %Y at %I:%M%p")
-	end
-
+	## custom_writers ##
 	def categories_attributes=(categories_attributes)
 		categories_attributes.values.each do |categories_attribute|
 			if !categories_attribute[:name].empty?
@@ -35,6 +33,7 @@ class Task < ApplicationRecord
 		end
 	end
 
+	## class methods ##
 	def self.sorted_by_due_date(user_tasks)
 		user_tasks.sort_by {|task| task.due_date }
 	end
@@ -61,21 +60,18 @@ class Task < ApplicationRecord
 		tasks = self.incompleted(user_tasks)
 		over_due_tasks = []
 		tasks.each do |task|
-			if Time.current > task.due_date
-				over_due_tasks << task
-			end
+	      over_due_tasks << task if (Time.current > task.due_date)
 		end
 		over_due_tasks
 	end
 
 	def self.grouped
-		@tasks = []
-		self.all.collect do |task|
-			if task.grouped && task.name
-				@tasks << task
-			end
-		end
-		@tasks
+		self.all.where("grouped = ?", true)
+	end
+
+	## instance methods ##
+	def formatted_date(date)
+		due_date.strftime("%a. %B, %e %Y at %I:%M%p")
 	end
 	
 end
