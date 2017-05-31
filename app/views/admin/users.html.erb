@@ -1,9 +1,3 @@
 <h1>Users</h1>
 
-<ol>
-<% @users.each do |user| %>
-  <li>
-  <%= link_to user.email, user_path(user) %> -  <i><%= overdue_tasks_message(user) %></i>
-  </li>
-<% end %>
-</ol>
+<%= render "show_users" %>

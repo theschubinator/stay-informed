@@ -1,0 +1,5 @@
+<% if !@completed_tasks.empty? %>
+  <%= render "tasks", tasks: @completed_tasks %>
+<% else %>
+  <p>You haven't completed any tasks yet!</p>
+<% end %>

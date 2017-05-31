@@ -2,7 +2,12 @@ class AdminController < ActionController::Base
 	layout 'application'
 
 	def users
-		@users = User.all
+		if current_user.admin?
+		  @users = User.all
+		else
+	      flash[:alert] = "You do not have the authorization to view this page."
+	      redirect_to root_path
+	    end
 	end
 
 	def new_task

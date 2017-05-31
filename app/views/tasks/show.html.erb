@@ -1,8 +1,8 @@
-<h1><%= @task.name %></h1>
+<h3><%= @task.name %></h3>
 
-<h4><%= @task.formatted_date(@task.due_date) %> - <%= list_task_categories(@task) %></h4>
+<p><i><%= @task.formatted_date(@task.due_date) %> - <%= list_task_categories(@task) %></i></p>
 
 <p><%= @task.description %></p>
 
-<%= link_to "Edit Task", edit_user_task_path(current_user, @task) %>
+<%= link_to "Edit Task", edit_user_task_path(current_user, @task) %> |
 <%= link_to "Delete Task",  user_task_path(current_user, @task), method: :delete %>
