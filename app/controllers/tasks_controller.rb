@@ -54,7 +54,6 @@ class TasksController < ApplicationController
 	def update
 	  if user_authorized?
 		find_task
-		binding.pry
 		@task.update(task_params)
 		redirect_to user_tasks_path(current_user)
 	  else
