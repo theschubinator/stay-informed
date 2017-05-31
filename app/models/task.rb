@@ -5,7 +5,7 @@ class Task < ApplicationRecord
     accepts_nested_attributes_for :categories
 
 	validates :name, :description, :categories, presence: true
-	validate :date?
+	#validate :date?
 
 	## validations ##
 	def date?
@@ -34,27 +34,23 @@ class Task < ApplicationRecord
 	end
 
 	## class methods ##
-	def self.sorted_by_due_date(user_tasks)
-		user_tasks.sort_by {|task| task.due_date }
+	def self.sorted_by_due_date(tasks)
+		tasks.sort_by {|task| task.due_date }
 	end
 
-	def self.incompleted(user_tasks)
-		 incomplete_tasks = user_tasks.where("complete = ?", false)
+	def self.incompleted(tasks)
+		 incomplete_tasks = tasks.where("complete = ?", false)
 		 incomplete_tasks.sort_by { |task| task.due_date }
 	end
 
-	def self.completed(user_tasks)
-		completed_tasks = user_tasks.where("complete = ?", true)
+	def self.completed(tasks)
+		completed_tasks = tasks.where("complete = ?", true)
 		completed_tasks.sort_by { |task| task.due_date }
 	end
 
-	def self.overdue_tasks(user_tasks)
-		tasks = self.incompleted(user_tasks)
-		over_due_tasks = []
-		tasks.each do |task|
-	      over_due_tasks << task if (Time.current > task.due_date)
-		end
-		over_due_tasks
+	def self.overdue_tasks(tasks)
+		  overdue_tasks = tasks.where("due_date < ?", Time.current)
+		  overdue_tasks.incompleted(overdue_tasks)
 	end
 
 	def self.grouped
