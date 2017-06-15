@@ -19,4 +19,9 @@
   <%= f.label :due_date %>:
   <%= f.datetime_select :due_date, ampm: true, default: 1.hour.from_now %> <br><br>
 
+  <p>Additional Details</p>
+  <%= f.fields_for :join_description, @task.category_tasks.build do |category_task| %>
+  <%= category_task.text_area :description, placeholder: @task.category_tasks.first.description %><br><br>
+  <% end %>
+
   <%= f.submit %>

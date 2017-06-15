@@ -5,7 +5,7 @@ class Task < ApplicationRecord
     accepts_nested_attributes_for :categories
 
 	validates :name, :description, :categories, presence: true
-	validate :date?
+	#validate :date?
 
 	## validations ##
 	def date?
@@ -29,6 +29,15 @@ class Task < ApplicationRecord
 			if !category_id.empty?
 			  category = Category.find(category_id)
 			  self.categories << category if !self.categories.include?(category)
+			end
+		end
+	end
+
+	def join_description=(join_description)
+		if !join_description[:description].empty?
+			self.category_tasks.each do |category_task|
+				category_task.description = join_description[:description]
+				category_task.save
 			end
 		end
 	end

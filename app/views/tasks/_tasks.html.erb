@@ -8,6 +8,11 @@
   <b>Name:</b> <%= task.name %><br>
   <b>Categories</b> <%= list_task_categories(task) %><br>
   <b>Description:</b> <%= task.description %><br>
+
+  <% if !(task.category_tasks.first.description == nil) %>
+    <b>Additional Details: </b><%= task.category_tasks.first.description %><br>
+  <% end %>
+  
   <b>Added By:</b> <%= task_added_by?(task) %><br>
   <b>Due Date:</b> <%= task.formatted_date(task.due_date) %> - 
   <%= link_to "View Task", user_task_path(current_user, task) %> |
