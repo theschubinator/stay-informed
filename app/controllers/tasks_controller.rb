@@ -3,6 +3,11 @@ class TasksController < ApplicationController
 		if user_authorized?
 		  @incomplete_tasks = Task.incompleted(user_tasks)
 		  @completed_tasks = Task.completed(user_tasks)
+		  @all_tasks = current_user.tasks
+		  respond_to do |f|
+		  	f.html { render :index }
+		  	f.json { render json: @all_tasks }
+		  end
 		else
 			flash[:alert] = "You do not have the authorization to view this page."
 			redirect_to root_path
