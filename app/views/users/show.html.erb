@@ -1,1 +1,30 @@
-<h1> Welcome, <%= @user.email %> ! </h1>
+<h1 id="username" data-id="<%= @user.id %>"> Welcome, <%= @user.email %> ! </h1>
+
+<div class="tasks">
+	<ol></ol>
+</div>
+
+<script type="text/javascript" charset="utf=8">
+	$(function () {
+		const id = $("#username").data("id")
+		$.get(`/users/${id}/tasks.json`, function(data) {
+			data.forEach(function(task) {
+				let categories = []
+				task.categories.forEach(function(category) {
+    			categories.push(category.name)
+				})
+				
+				let html = 
+				`<li>
+					<b>Name:</b> ${task["name"]}<br>
+					<b>Categories:</b> ${categories.join(", ")}<br>
+					<b>Description:</b> ${task.description}<br>
+					<b>Added by:</b> ${task.user.email}<br>
+					<b>Due Date:</b> ${new Date(task.due_date)}
+				</li><br>`
+
+				$(".tasks ol").append(html)
+			})
+		})
+	})
+</script>
