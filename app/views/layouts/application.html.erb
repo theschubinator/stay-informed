@@ -14,7 +14,7 @@
       <nav>
         <%= link_to "Home", root_path %> |
         <% if current_user %>
-          <%= link_to "User Profile", user_path(current_user) %> |
+          <%= link_to "User Profile", user_profile_path(current_user) %> |
           <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
         <% else %>
           <%= link_to "Sing In", new_user_session_path %> |
