@@ -13,7 +13,9 @@ function loadTasks() {
 	const id = $("#username").data("id")
 
 	$.get(`/users/${id}/tasks.json`, function(data) {	
-		findCategories(data)
+		findCategories(data) //finds and loads category links into HTML...
+		overdueAlert(data)
+
 		data.forEach(function(task) {
 			const categories = []
 			task.categories.forEach(function(category) {
@@ -151,4 +153,17 @@ function loadCategories(categories, user_id) {
 		html += ` <a href="${user_id}/categories/${category.id}">${category.name}</a> |`
 	})
 	$("#categories").html(html)
+}
+
+function overdueAlert(data) {
+	let overdue = 0
+
+	data.forEach(function(task) {
+		let date = new Date(task.due_date)
+		if(date.getTime() < Date.now() && task.complete === false) {
+	 		overdue += 1
+		}
+	})
+	
+	$("#overdueAlert").html(`<b>You have ${overdue} overdue tasks!<b>`)
 }
