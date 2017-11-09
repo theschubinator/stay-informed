@@ -7,12 +7,13 @@ function attachListeners() {
 }
 
 function loadTasks() {
-	$(".current_tasks").html("<h3>Current Tasks</h3><ol></ol>")
-	$(".completed_tasks").html("<h3>Completed Tasks</h3><ol></ol>")
-	
+	$("#current_tasks").html("<h3>Current Tasks</h3><ol></ol>")
+	$("#completed_tasks").html("<h3>Completed Tasks</h3><ol></ol>")
+
 	const id = $("#username").data("id")
 
 	$.get(`/users/${id}/tasks.json`, function(data) {	
+		findCategories(data)
 		data.forEach(function(task) {
 			const categories = []
 			task.categories.forEach(function(category) {
@@ -30,9 +31,9 @@ function loadTasks() {
 			</li><br id=br_${task.id}>`
 
 			if (task.complete) {
-				$(".completed_tasks ol").append(html)
+				$("#completed_tasks ol").append(html)
 			} else {
-				$(".current_tasks ol").append(html)
+				$("#current_tasks ol").append(html)
 			}
 		})
 		completeTask(id)
@@ -77,9 +78,9 @@ function moveTaskLocation(task) {
 	$(`#br_${id}`).remove()
 
 	if (task.complete) {
-		$(".completed_tasks ol").append(html)
+		$("#completed_tasks ol").append(html)
 	} else {
-		$(".current_tasks ol").append(html)
+		$("#current_tasks ol").append(html)
 	}
 }
 
@@ -113,9 +114,41 @@ function formateTime(hours, minutes) {
 	if (hours > 12) {
 		const hour = hours - 12
 		time = `${hour}:${minute} P.M.`
-
 	} else {
 		time = `${hour}:${minute} A.M.`
 	}
 	return time
+}
+
+function findCategories(data) {
+	const user_id = data[0].user
+	allCategories = []
+	data.forEach(function(task) {
+		task.categories.forEach(function(category){
+
+			if (allCategories.length === 0) {
+				allCategories.push(category)
+			}
+
+			let found = false
+			for(let i = 0; i < allCategories.length; i++) {
+		    if (allCategories[i].name === category.name) {
+		    	found = true
+		    }
+			}
+
+			if (!found) {
+				allCategories.push(category)
+			}
+		})
+	})
+	loadCategories(allCategories, user_id)
+}
+
+function loadCategories(categories, user_id) {
+	let html = "View Tasks By Category: | "
+	categories.forEach(function(category) {
+		html += ` <a href="${user_id}/categories/${category.id}">${category.name}</a> |`
+	})
+	$("#categories").html(html)
 }
