@@ -6,7 +6,8 @@ class UsersController < ApplicationController
 		  flash[:alert] = "You do not have the authorization to view this page."
 		  redirect_to root_path
 		end
-		
+	end
+
 	def profile
 		if current_user == User.find_by(id: params[:user_id]) || current_user.admin?
 		  @user = User.find(params[:user_id])
