@@ -22,7 +22,7 @@ function loadTasks() {
 				<b>Categories:</b> ${categories.join(", ")}<br>
 				<b>Description:</b> ${task.description}<br>
 				<b>Added by:</b> ${task.user.email}<br>
-				<b>Due Date:</b> ${new Date(task.due_date)}
+				<b>Due Date:</b> ${formateDate(task.due_date)}
 			</li><br id=br_${task.id}>`
 
 			if (task.complete) {
@@ -81,4 +81,43 @@ function moveTaskLocation(task) {
 	} else {
 		$(".current_tasks ol").append(html)
 	}
+}
+
+function formateDate(date) {
+	let d = new Date(date)
+
+	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "Octoboer", "November", "December"]
+	const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+	const dayofmonth = d.getDate()
+	const month = months[d.getMonth()]
+	const day = days[d.getDay()]
+	const year = d.getFullYear()
+	const time = formateTime(d.getHours(), d.getMinutes())
+	// const hour = formateHour(d.getHours())
+	// const minute = formateMinutes(d.getMinutes())
+
+	const formattedDate = `${day}, ${month}, ${dayofmonth} ${year} at ${time}`
+	return formattedDate
+}
+
+
+function formateTime(hours, minutes) {
+	let minute = ""
+	let time = ""
+
+	if (minutes < 10) {
+		minute = `0${minutes}`
+	} else {
+		minute = minutes
+	}
+
+	if (hours > 12) {
+		const hour = hours - 12
+		time = `${hour}:${minute} P.M.`
+
+	} else {
+		time = `${hour}:${minute} A.M.`
+	}
+	return time
 }
