@@ -7,8 +7,12 @@ function attachListeners() {
 }
 
 function loadTasks() {
+	$(".current_tasks").html("<h3>Current Tasks</h3><ol></ol>")
+	$(".completed_tasks").html("<h3>Completed Tasks</h3><ol></ol>")
+	
 	const id = $("#username").data("id")
-	$.get(`/users/${id}/tasks.json`, function(data) {
+
+	$.get(`/users/${id}/tasks.json`, function(data) {	
 		data.forEach(function(task) {
 			const categories = []
 			task.categories.forEach(function(category) {
@@ -35,11 +39,6 @@ function loadTasks() {
 	})
 }
 
-function getTask(user_id, task_id) {
-	$.get(`${user_id}/tasks/${task_id}.json`, function(data) {
-		return data
-	})
-}
 
 //How can I reset a completed task back without refreshing the page???
 function completeTask(user_id) {
@@ -68,6 +67,7 @@ function completeTask(user_id) {
 	})
 }
 
+//Moves a completed task back and forth betweeen current and completed tasks.
 function moveTaskLocation(task) {
 	const id = task.id
 	const html = `<li id=task_${task.id}>${$(`#task_${id}`).html()}</li><br id=${id}>`
@@ -94,8 +94,6 @@ function formateDate(date) {
 	const day = days[d.getDay()]
 	const year = d.getFullYear()
 	const time = formateTime(d.getHours(), d.getMinutes())
-	// const hour = formateHour(d.getHours())
-	// const minute = formateMinutes(d.getMinutes())
 
 	const formattedDate = `${day}, ${month}, ${dayofmonth} ${year} at ${time}`
 	return formattedDate
