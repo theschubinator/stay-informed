@@ -1,6 +1,6 @@
-<ol>
+<ol class="task_list">
 <% tasks.each do |task| %>
-  <li>
+  <li class="task">
   <%= form_for task, url: user_task_path(current_user, task) do |f| %>
     <%= f.check_box :complete %>
     <%= f.submit "Complete Task" %>
@@ -15,7 +15,7 @@
   
   <b>Added By:</b> <%= task_added_by?(task) %><br>
   <b>Due Date:</b> <%= task.formatted_date(task.due_date) %> - 
-  <%= link_to "View Task", user_task_path(current_user, task) %> |
-  <%= link_to "Delete Task",  user_task_path(current_user, task), method: :delete %></li><br>
+  <%= link_to "View Task", user_task_path(current_user, task), class: "view_task" %> |
+  <%= link_to "Delete Task",  user_task_path(current_user, task), method: :delete, class: "delete_task" %></li><br>
 <% end %>
 </ol>
