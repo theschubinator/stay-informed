@@ -1,17 +1,31 @@
-<h1> Welcome, <%= current_user.email %> </h1>
+<h1 id="welcome"> Welcome, <%= current_user.email %> </h1>
 
 <%= render "users/admin_tools" if current_user.admin? %>
 
-<p>View Tasks By Category: <%= render "category_links" %></p>
-
 <p><b><%= render "overdue_task_message" %></b></p>
 
-<%= link_to "New Task", new_user_task_path(current_user) %>
-
-<h3>Current Tasks</h3>
-<%= render "current_tasks" %>
-
-<h3>Completed Tasks</h3>
-<%= render "completed_tasks" %>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<p id="task_search">View Tasks By Category: <%= render "category_links" %></p>
+		</div>
+		<div class="col-md-6">
+		</div>
+	</div>
+</div>
 
 <%= link_to "View All Completed Tasks", user_completed_tasks_path(current_user) %> 
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h3>Current Tasks</h3>
+			<%= render "current_tasks" %>
+			<%= link_to "View All Current Tasks", user_completed_tasks_path(current_user) %> 
+		</div>
+		<div class="col-md-6">
+			<button type="button" class="btn btn-primary" id="new_task">New Task</button>
+			<div id="render_new_form"></div>
+		</div>
+	</div>
+</div>

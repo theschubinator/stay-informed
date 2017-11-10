@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 	def index
 		if user_authorized?
 		  @incomplete_tasks = Task.incompleted(user_tasks)
-		  @completed_tasks = Task.completed(user_tasks)
+		  # @completed_tasks = Task.completed(user_tasks)
 		else
 			flash[:alert] = "You do not have the authorization to view this page."
 			redirect_to root_path

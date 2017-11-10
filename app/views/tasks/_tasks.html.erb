@@ -6,7 +6,7 @@
     <%= f.submit "Complete Task" %>
   <% end %>
   <b>Name:</b> <%= task.name %><br>
-  <b>Categories</b> <%= list_task_categories(task) %><br>
+  <b>Categories:</b> <%= list_task_categories(task) %><br>
   <b>Description:</b> <%= task.description %><br>
 
   <% if !(task.category_tasks.first.description == nil) %>
