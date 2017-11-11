@@ -1,6 +1,7 @@
 $(function () {
 	loadMoreTasks()
 	completeTask()
+	renderNewTaskForm()
 })
 
 //Objects
@@ -105,6 +106,15 @@ function completeTask() {
 				dataType: "json",
 			})
 		})	
+	})
+}
+
+function renderNewTaskForm() {
+	$("#new_task_btn").on("click", function(e) {
+		let user_id = 1
+		$.get(`tasks/new`, function(html) {
+			$("#render_new_form").html(html)
+		})
 	})
 }
 

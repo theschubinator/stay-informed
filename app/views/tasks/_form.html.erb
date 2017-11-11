@@ -21,7 +21,7 @@
 
   <p>Additional Details</p>
   <%= f.fields_for :join_description, @task.category_tasks.build do |category_task| %>
-  <%= category_task.text_area :description, placeholder: @task.category_tasks.first.description %><br><br>
+  <%= category_task.text_area :description, placeholder: @task.category_tasks.first.description, size: "40x10" %><br><br>
   <% end %>
 
   <%= f.submit %>
