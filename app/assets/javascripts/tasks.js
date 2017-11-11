@@ -10,6 +10,8 @@ function Task(data) {
 	this.description = data.description
 	this.complete = data.complete
 	this.due_date = data.due_date
+	this.categories = data.categories
+	this.user = data.user
 }
 
 Task.prototype.due = function() {
@@ -62,11 +64,19 @@ function loadMoreTasks() {
 			}
 
 			moreTasks.forEach(function(task) {
+				function listCategories() {
+					let categories = []
+					task.categories.forEach(function (category) {
+						categories.push(category.name)
+					})
+					return categories.join(", ")
+				}
+
 				taskHTML = `<li>`
 				taskHTML += `<b>Name:</b> ${task.name}<br>`
-				taskHTML += `<b>Categories:</b> ${task.categories}<br>`
+				taskHTML += `<b>Categories:</b> ${listCategories()}<br>`
 				taskHTML += `<b>Description:</b> ${task.description}<br>`
-				taskHTML += `<b>Added By:</b> Name Goes Here<br>`
+				taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
 				taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
 				taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
