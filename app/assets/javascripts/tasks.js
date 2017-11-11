@@ -1,5 +1,6 @@
 $(function () {
 	loadMoreTasks()
+	completeTask()
 })
 
 //Objects
@@ -76,5 +77,24 @@ function loadMoreTasks() {
 			})
 		})
 	})	
+}
+
+function completeTask() {
+	$(".btn-sm").on("click", function(e) {
+		const user_id = $(this).data("user_id")
+		const task_id = $(this).data("task_id")
+
+		$.get(`/users/${user_id}/tasks/${task_id}.json`, function(taskData) {
+			const task = new Task(taskData)
+			task.complete ? task.complete = false : task.complete = true
+			$.ajax({
+				type: "PATCH",
+				url: `/users/${user_id}/tasks/${task_id}`,
+				data: JSON.stringify(task),
+				contentType: "application/json",
+				dataType: "json",
+			})
+		})	
+	})
 }
 

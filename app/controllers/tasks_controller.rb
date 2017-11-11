@@ -40,6 +40,10 @@ class TasksController < ApplicationController
 	def show
 		if user_authorized?
 		  find_task
+		  respond_to do |f|
+		  	f.html {render :show}
+		  	f.json {render json: @task}
+		  end
 		else
 		  flash[:alert] = "You do not have the authorization to view this page."
 		  redirect_to root_path
