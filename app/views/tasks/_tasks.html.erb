@@ -1,7 +1,6 @@
 <ol>
 <% tasks.each do |task| %>
   <li>
-  <button type="button" class="btn btn-primary btn-sm">Complete</button>
   <b>Name:</b> <%= task.name %><br>
   <b>Categories:</b> <%= list_task_categories(task) %><br>
   <b>Description:</b> <%= task.description %><br>
@@ -11,8 +10,9 @@
   <% end %>
   
   <b>Added By:</b> <%= task_added_by?(task) %><br>
-  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %> - 
-  <%= link_to "View Task", user_task_path(current_user, task) %> |
-  <%= link_to "Delete Task",  user_task_path(current_user, task), method: :delete %></li><br>
+  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br>
+  <button type="button" class="btn btn-success btn-sm">Complete</button> 
+  <button type="button" class="btn btn-primary btn-sm">View</button> 
+  <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>
 <% end %>
 </ol>

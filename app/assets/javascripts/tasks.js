@@ -62,12 +62,14 @@ function loadMoreTasks() {
 
 			moreTasks.forEach(function(task) {
 				taskHTML = `<li>`
-				taskHTML += `<button type="button" class="btn btn-primary btn-sm">Complete</button> `
 				taskHTML += `<b>Name:</b> ${task.name}<br>`
 				taskHTML += `<b>Categories:</b> ${task.categories}<br>`
 				taskHTML += `<b>Description:</b> ${task.description}<br>`
 				taskHTML += `<b>Added By:</b> Name Goes Here<br>`
-				taskHTML += `<b>Due Date:</b> ${task.due()}<br><br>`
+				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+				taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
+				taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
+				taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
 				taskHTML += `</li>`
 
 				$("#rendered_tasks").append(taskHTML)
