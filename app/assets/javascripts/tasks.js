@@ -84,9 +84,10 @@ function loadMoreTasks() {
 				taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
 				taskHTML += `</li>`
 
-				$("#rendered_tasks").append(taskHTML)
+				$("#list_tasks").append(taskHTML)
 			})
 		})
+		$("#view_all_tasks").remove()
 	})	
 }
 
@@ -115,6 +116,7 @@ function renderNewTaskForm() {
 		$.get(`tasks/new`, function(html) {
 			$("#render_new_form").html(html)
 		})
+		$("#new_task_btn").remove()
 	})
 }
 
