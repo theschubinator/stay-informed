@@ -2,6 +2,10 @@ class TasksController < ApplicationController
 	def index
 		if user_authorized?
 		  @incomplete_tasks = Task.incompleted(user_tasks)
+		  respond_to do |f|
+		  	f.html {render :index}
+		  	f.json {render json: @incomplete_tasks}
+		  end
 		  # @completed_tasks = Task.completed(user_tasks)
 		else
 			flash[:alert] = "You do not have the authorization to view this page."
