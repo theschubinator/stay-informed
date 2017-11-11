@@ -44,7 +44,7 @@ Task.prototype.due = function() {
 function loadMoreTasks() {
 	$("#view_all_tasks").on("click", function(e) {
 		e.preventDefault()
-		
+
 		$.get(`/users/1/tasks.json`, function (tasks) {
 			let moreTasks = []
 
@@ -62,6 +62,7 @@ function loadMoreTasks() {
 
 			moreTasks.forEach(function(task) {
 				taskHTML = `<li>`
+				taskHTML += `<button type="button" class="btn btn-primary btn-sm">Complete</button> `
 				taskHTML += `<b>Name:</b> ${task.name}<br>`
 				taskHTML += `<b>Categories:</b> ${task.categories}<br>`
 				taskHTML += `<b>Description:</b> ${task.description}<br>`
