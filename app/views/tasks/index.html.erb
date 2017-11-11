@@ -1,38 +1,36 @@
-<h1 id="welcome"> Welcome, <%= current_user.email %> </h1>
 
 <%= render "users/admin_tools" if current_user.admin? %>
 
-<p><b><%= render "overdue_task_message" %></b></p>
+<h1 id="welcome"> <%= current_user.email %> </h1>
+
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-sm-6">
+			<p><b><%= render "overdue_task_message" %></b></p>
+		</div>
+		<div class="col-sm-6"></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
 			<p id="task_search">View Tasks By Category: <%= render "category_links" %></p>
 		</div>
-		<div class="col-md-6">
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<%= link_to "View All Completed Tasks", user_completed_tasks_path(current_user) %> 
 		</div>
 	</div>
-</div>
-
-<%= link_to "View All Completed Tasks", user_completed_tasks_path(current_user) %> 
-
-<div class="container">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-sm-6">
 			<h3>Current Tasks</h3>
 			<%= render "current_tasks" %>
 			<a href="#" id="view_all_tasks">View All Current Tasks</a>
 		</div>
-		<div class="col-md-6">
+		<div class="col-sm-6">
 			<button type="button" class="btn btn-primary" id="new_task_btn">New Task</button>
 			<div id="render_new_form"></div>
 			</div>
 		</div>
-		<!-- <div class="row">
-			<div class="col-md-6">
-				<div class="render_more_tasks">
-					<ol start="4" id="rendered_tasks"></ol>
-				</div>
-		</div> -->
 	</div>
 </div>

@@ -15,7 +15,6 @@ class TasksController < ApplicationController
 	end
 
 	def new
-
 		if user_authorized?
 		  @task = Task.new
 		  render layout: false
@@ -29,10 +28,11 @@ class TasksController < ApplicationController
 		if user_authorized?
 		  @task = user_tasks.build(task_params)
 		  if @task.save
-		    redirect_to user_tasks_path(current_user)
+		  	render json: @task, status:201
+		    # redirect_to user_tasks_path(current_user)
 		  else
 	        flash[:alert] = @task.errors.full_messages.join(" & ")
-			render 'new'
+					render 'new'
 		  end
 	    else
 	      flash[:alert] = "You do not have the authorization to view this page."

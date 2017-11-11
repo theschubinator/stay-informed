@@ -11,7 +11,7 @@
   <body>
   	  <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
-      <nav>
+      <nav id="navigation">
         <%= link_to "Home", root_path %> |
         <% if current_user %>
           <%= link_to "User Profile", user_path(current_user) %> |

@@ -115,8 +115,37 @@ function renderNewTaskForm() {
 		let user_id = 1
 		$.get(`tasks/new`, function(html) {
 			$("#render_new_form").html(html)
+			saveNewTask()
 		})
 		$("#new_task_btn").remove()
 	})
 }
 
+function saveNewTask() {
+	$("form").on("submit", function(e) {
+		e.preventDefault()
+		let taskData = $(this).serialize()
+		$.post(`tasks/`, taskData).done(function(taskData) {
+			$.get(`tasks/${taskData.id}.json`, function(taskData) {
+				let task = new Task(taskData)
+				function listCategories() {
+					let categories = []
+					task.categories.forEach(function (category) {
+						categories.push(category.name)
+					})
+					return categories.join(", ")
+				}
+				debugger
+				taskHTML =	"<p id='task_submission_alert'>Task Created Successfully!</p>"
+				taskHTML += "<h3> Newly Created Task</h3>"
+				taskHTML += `<b>Name:</b> ${task.name}<br>`
+				taskHTML += `<b>Categories:</b> ${listCategories()}<br>`
+				taskHTML += `<b>Description:</b> ${task.description}<br>`
+				taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
+				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+
+				$("#render_new_form").html(taskHTML)
+			})
+		})
+	})
+}
