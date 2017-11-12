@@ -2,6 +2,7 @@ $(function () {
 	loadMoreTasks()
 	completeTask()
 	renderNewTaskForm()
+	deleteTask()
 })
 
 //Objects
@@ -92,7 +93,7 @@ function loadMoreTasks() {
 }
 
 function completeTask() {
-	$(".btn-sm").on("click", function(e) {
+	$(".btn-success").on("click", function(e) {
 		const user_id = $(this).data("user_id")
 		const task_id = $(this).data("task_id")
 
@@ -147,5 +148,21 @@ function saveNewTask() {
 				$("#render_new_form").html(taskHTML)
 			})
 		})
+	})
+}
+
+function deleteTask() {
+	$(".btn-danger").on("click", function(e) {
+		const user_id = $(this).data("user_id")
+		const task_id = $(this).data("task_id")
+
+		$.get(`/users/${user_id}/tasks/${task_id}.json`, function(taskData) {
+			const task = new Task(taskData)
+			task.complete ? task.complete = false : task.complete = true
+			$.ajax({
+				type: "DELETE",
+				url: `/users/${user_id}/tasks/${task_id}`,
+			})
+		})	
 	})
 }
