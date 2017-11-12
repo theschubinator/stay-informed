@@ -136,7 +136,7 @@ function saveNewTask() {
 					})
 					return categories.join(", ")
 				}
-				debugger
+
 				taskHTML =	"<p id='task_submission_alert'>Task Created Successfully!</p>"
 				taskHTML += "<h3> Newly Created Task</h3>"
 				taskHTML += `<b>Name:</b> ${task.name}<br>`

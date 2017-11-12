@@ -11,7 +11,11 @@
   
   <b>Added By:</b> <%= task_added_by?(task) %><br>
   <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br>
-  <button type="button" class="btn btn-success btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Complete</button> 
+  <% if task.complete %>
+    <button type="button" class="btn btn-success btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Mark Incomplete</button> 
+  <% else %>
+    <button type="button" class="btn btn-success btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Complete</button> 
+  <% end %>
   <button type="button" class="btn btn-primary btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>View</button> 
   <button type="button" class="btn btn-danger btn-sm"  data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Delete</button><br><br>
 <% end %>
