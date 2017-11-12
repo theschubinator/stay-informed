@@ -3,6 +3,7 @@ $(function () {
 	completeTask()
 	renderNewTaskForm()
 	deleteTask()
+	viewTasks()
 })
 
 //Objects
@@ -76,9 +77,9 @@ function loadMoreTasks() {
 
 				taskHTML = `<li>`
 				taskHTML += `<b>Name:</b> ${task.name}<br>`
-				taskHTML += `<b>Categories:</b> ${listCategories()}<br>`
-				taskHTML += `<b>Description:</b> ${task.description}<br>`
-				taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
+				// taskHTML += `<b>Categories:</b> ${listCategories()}<br>`
+				// taskHTML += `<b>Description:</b> ${task.description}<br>`
+				// taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
 				taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
 				taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
@@ -164,5 +165,37 @@ function deleteTask() {
 				url: `/users/${user_id}/tasks/${task_id}`,
 			})
 		})	
+	})
+}
+
+function viewTasks() {
+	$(".btn-primary").on("click", function(e) {
+		const user_id = $(this).data("user_id")
+		const task_id = $(this).data("task_id")
+
+		$.get(`/users/${user_id}/tasks/${task_id}.json`, function(taskData) {
+			let task = new Task(taskData)
+
+			function listCategories() {
+				let categories = []
+				task.categories.forEach(function (category) {
+					categories.push(category.name)
+				})
+				return categories.join(", ")
+			}
+
+			taskHTML = `<b>Categories:</b> ${listCategories()}<br>`
+			taskHTML += `<b>Description:</b> ${task.description}<br>`
+			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
+			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
+			taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
+
+			$("#list_tasks").html(taskHTML)
+			$("#task_header").html(task.name)
+			$("#view_all_tasks").remove()
+
+		})
 	})
 }
