@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :tasks
     resources :categories
+    get "/profile", to: "users#profile"
     get "/completed_tasks", to: "tasks#completed_tasks", as: "completed_tasks"
   end
 

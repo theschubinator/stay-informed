@@ -34,10 +34,10 @@ class TasksController < ApplicationController
 	        flash[:alert] = @task.errors.full_messages.join(" & ")
 					render 'new'
 		  end
-	    else
-	      flash[:alert] = "You do not have the authorization to view this page."
-		  redirect_to root_path
-	    end
+    else
+    flash[:alert] = "You do not have the authorization to view this page."
+	  redirect_to root_path
+    end
 	end
 
 	def show
@@ -57,7 +57,7 @@ class TasksController < ApplicationController
 	  if user_authorized?
 		find_task
 	  else
-	    flash[:alert] = "You do not have the authorization to view this page."
+	  flash[:alert] = "You do not have the authorization to view this page."
 		redirect_to root_path
 	  end
 	end
@@ -66,7 +66,8 @@ class TasksController < ApplicationController
 	  if user_authorized?
 		find_task
 		@task.update(task_params)
-		redirect_to user_tasks_path(current_user)
+		render json: @task
+		# redirect_to user_tasks_path(current_user)
 	  else
 	  	flash[:alert] = "You do not have the authorization to view this page."
 		redirect_to root_path
