@@ -1,21 +1,25 @@
-<ol class="task_list">
+<ol id="list_tasks">
 <% tasks.each do |task| %>
-  <li class="task">
-  <%= form_for task, url: user_task_path(current_user, task) do |f| %>
-    <%= f.check_box :complete %>
-    <%= f.submit "Complete Task" %>
-  <% end %>
+  <li>
   <b>Name:</b> <%= task.name %><br>
-  <b>Categories</b> <%= list_task_categories(task) %><br>
+  <!-- <b>Categories:</b> <%= list_task_categories(task) %><br>
   <b>Description:</b> <%= task.description %><br>
 
   <% if !(task.category_tasks.first.description == nil) %>
     <b>Additional Details: </b><%= task.category_tasks.first.description %><br>
   <% end %>
-  
   <b>Added By:</b> <%= task_added_by?(task) %><br>
   <b>Due Date:</b> <%= task.formatted_date(task.due_date) %> - 
   <%= link_to "View Task", user_task_path(current_user, task), class: "view_task" %> |
   <%= link_to "Delete Task",  user_task_path(current_user, task), method: :delete, class: "delete_task" %></li><br>
+  <b>Added By:</b> <%= task_added_by?(task) %><br> -->
+  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br>
+  <% if task.complete %>
+    <button type="button" class="btn btn-success btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Mark Incomplete</button> 
+  <% else %>
+    <button type="button" class="btn btn-success btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Complete</button> 
+  <% end %>
+  <button type="button" class="btn btn-primary btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>View</button> 
+  <button type="button" class="btn btn-danger btn-sm"  data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Delete</button><br><br>
 <% end %>
 </ol>

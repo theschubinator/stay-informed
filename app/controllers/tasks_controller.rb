@@ -1,8 +1,13 @@
 class TasksController < ApplicationController
+
 	def index
 		if user_authorized?
 		  @incomplete_tasks = Task.incompleted(user_tasks)
-		  @completed_tasks = Task.completed(user_tasks)
+		  respond_to do |f|
+		  	f.html {render :index}
+		  	f.json {render json: @incomplete_tasks}
+		  end
+		  # @completed_tasks = Task.completed(user_tasks)
 		else
 			flash[:alert] = "You do not have the authorization to view this page."
 			redirect_to root_path
@@ -12,6 +17,7 @@ class TasksController < ApplicationController
 	def new
 		if user_authorized?
 		  @task = Task.new
+		  render layout: false
 		else
 		  	flash[:alert] = "You do not have the authorization to view this page."
 			redirect_to root_path
@@ -22,10 +28,11 @@ class TasksController < ApplicationController
 		if user_authorized?
 		  @task = user_tasks.build(task_params)
 		  if @task.save
-		    redirect_to user_tasks_path(current_user)
+		  	render json: @task, status:201
+		    # redirect_to user_tasks_path(current_user)
 		  else
 	        flash[:alert] = @task.errors.full_messages.join(" & ")
-			render 'new'
+					render 'new'
 		  end
 	    else
 	      flash[:alert] = "You do not have the authorization to view this page."
@@ -36,6 +43,10 @@ class TasksController < ApplicationController
 	def show
 		if user_authorized?
 		  find_task
+		  respond_to do |f|
+		  	f.html {render :show}
+		  	f.json {render json: @task}
+		  end
 		else
 		  flash[:alert] = "You do not have the authorization to view this page."
 		  redirect_to root_path

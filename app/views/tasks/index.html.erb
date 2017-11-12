@@ -1,17 +1,35 @@
-<h1> Welcome, <%= current_user.email %> </h1>
 
 <%= render "users/admin_tools" if current_user.admin? %>
 
-<p>View Tasks By Category: <%= render "category_links" %></p>
+<h1 id="welcome"> <%= current_user.email %> </h1>
 
-<p><b><%= render "overdue_task_message" %></b></p>
-
-<%= link_to "New Task", new_user_task_path(current_user), id: "new_task_link" %>
-
-<h3 id="current_tasks">Current Tasks</h3>
-<%= render "current_tasks" %>
-
-<h3 id="completed_tasks">Completed Tasks</h3>
-<%= render "completed_tasks" %>
-
-<%= link_to "View All Completed Tasks", user_completed_tasks_path(current_user), id: "view_completed_tasks" %> 
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<p><b><%= render "overdue_task_message" %></b></p>
+		</div>
+		<div class="col-sm-6"></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<p id="task_search">View Tasks By Category: <%= render "category_links" %></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<%= link_to "View All Completed Tasks", user_completed_tasks_path(current_user) %> 
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<h3 id="task_header">Current Tasks</h3>
+			<%= render "current_tasks" %>
+			<a href="#" id="view_all_tasks">View All Current Tasks</a>
+		</div>
+		<div class="col-sm-6">
+			<button type="button" class="btn btn-primary" id="new_task_btn">New Task</button>
+			<div id="render_new_form"></div>
+			</div>
+		</div>
+	</div>
+</div>

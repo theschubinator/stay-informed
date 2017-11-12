@@ -183,17 +183,17 @@ function viewTasks() {
 				})
 				return categories.join(", ")
 			}
-			taskHTML = `<h3>${task.name}</h3>`
-			taskHTML += `<b>Categories:</b> ${listCategories()}<br>`
+
+			taskHTML = `<b>Categories:</b> ${listCategories()}<br>`
 			taskHTML += `<b>Description:</b> ${task.description}<br>`
 			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
 			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
 			taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
 
 			$("#list_tasks").html(taskHTML)
-
+			$("#task_header").html(task.name)
+			$("#view_all_tasks").remove()
 		})
 	})
 }

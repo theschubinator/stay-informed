@@ -1,5 +1,5 @@
 <% if !@incomplete_tasks.empty? %>
-  <%= render "tasks", tasks: @incomplete_tasks %>
+  <%= render "tasks", tasks: @incomplete_tasks[0 .. 2] %>
 <% else %>
   <p id="all_completed_message">Congrats! All Tasks are completed at this time!</p>
 <% end %>
