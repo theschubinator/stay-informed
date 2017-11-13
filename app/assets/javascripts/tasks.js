@@ -1,10 +1,9 @@
 $(function () {
-	// loadPage()
 	loadMoreTasks()
 	completeTask()
 	renderNewTaskForm()
 	deleteTask()
-	viewTasks()
+	viewTask()
 	updateTask()
 	viewByCategory()
 })
@@ -49,6 +48,7 @@ Task.prototype.due = function() {
 
 	return `${day} ${month}, ${dayOfMonth} ${year} at ${totalTime}`
 }
+// ******************** //
 
 function loadMoreTasks() {
 	$("#view_all_tasks").on("click", function(e) {
@@ -68,8 +68,56 @@ function loadAllTasksAfterThree(tasksJSON) {
 			tasks.push(taskObj)
 		}
 	}
-	listTasks(tasks)
+
+	$("#list_tasks").append(listTasks(tasks))
 	$("#view_all_tasks").remove()
+}
+
+function viewByCategory() {
+	$("#task_search a").on("click", function(e) {
+		e.preventDefault()
+		const categoryName = $(this).html()
+		$.get(`${this.href}.json`, function(TasksData) {
+			let tasks = []
+			TasksData.forEach(function(taskData) {
+				let task = new Task(taskData)
+				tasks.push(task)
+			})
+			$("#task_header").html(categoryName)
+			$("#list_tasks").empty()
+			$("#list_tasks").append(listTasks(tasks))
+		})
+	})
+}
+
+function viewTask() {
+	$(".view_btn").on("click", function(e) {
+		const task_id = $(this).data("task_id")
+
+		$.get(`tasks/${task_id}.json`, function(taskData) {
+			let task = new Task(taskData)
+
+			function listCategories() {
+				let categories = []
+				task.categories.forEach(function (category) {
+					categories.push(category.name)
+				})
+				return categories.join(", ")
+			}
+
+			taskHTML = `<b>Categories:</b> ${listCategories()}<br>`
+			taskHTML += `<b>Description:</b> ${task.description}<br>`
+			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
+			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn">Update</button>`
+			taskHTML += `<button type="button" class="btn btn-danger btn-sm">Delete</button>`
+			//Complete, Update, and Delete do not work on viewTasks()
+			$("#list_tasks").html(taskHTML)
+			$("#task_header").html(task.name)
+			$("#view_all_tasks").remove()
+		})
+	})
 }
 
 function listTasks(tasks) {
@@ -81,28 +129,8 @@ function listTasks(tasks) {
 		taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
 		taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
 		taskHTML += `</li>`
-
-		$("#list_tasks").append(taskHTML)
 	})
-}
-
-function completeTask() {
-	$(".complete_btn").on("click", function(e) {
-		const user_id = $(this).data("user_id")
-		const task_id = $(this).data("task_id")
-
-		$.get(`/users/${user_id}/tasks/${task_id}.json`, function(taskData) {
-			const task = new Task(taskData)
-			task.complete ? task.complete = false : task.complete = true
-			$.ajax({
-				type: "PATCH",
-				url: `/users/${user_id}/tasks/${task_id}`,
-				data: JSON.stringify(task),
-				contentType: "application/json",
-				dataType: "json",
-			})
-		})	
-	})
+	return taskHTML
 }
 
 function renderNewTaskForm() {
@@ -156,59 +184,31 @@ function listCategoryNames(task) {
 	return categories.join(", ")
 }
 
+function completeTask() {
+	$(".complete_btn").on("click", function(e) {
+		const user_id = $(this).data("user_id")
+		const task_id = $(this).data("task_id")
+
+		$.get(`/users/${user_id}/tasks/${task_id}.json`, function(taskData) {
+			const task = new Task(taskData)
+			task.complete ? task.complete = false : task.complete = true
+			$.ajax({
+				type: "PATCH",
+				url: `/users/${user_id}/tasks/${task_id}`,
+				data: JSON.stringify(task),
+				contentType: "application/json",
+				dataType: "json",
+			})
+		})	
+	})
+}
+
 function deleteTask() {
 	$(".delete_btn").on("click", function(e) {
 		const task_id = $(this).data("task_id")
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			$.ajax({type: "DELETE", url: `tasks/${task_id}`})
 		})	
-	})
-}
-
-function viewTasks() {
-	$(".view_btn").on("click", function(e) {
-		const task_id = $(this).data("task_id")
-
-		$.get(`tasks/${task_id}.json`, function(taskData) {
-			let task = new Task(taskData)
-
-			function listCategories() {
-				let categories = []
-				task.categories.forEach(function (category) {
-					categories.push(category.name)
-				})
-				return categories.join(", ")
-			}
-
-			taskHTML = `<b>Categories:</b> ${listCategories()}<br>`
-			taskHTML += `<b>Description:</b> ${task.description}<br>`
-			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
-			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
-			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn">Update</button>`
-			taskHTML += `<button type="button" class="btn btn-danger btn-sm">Delete</button>`
-			//Complete, Update, and Delete do not work on viewTasks()
-			$("#list_tasks").html(taskHTML)
-			$("#task_header").html(task.name)
-			$("#view_all_tasks").remove()
-		})
-	})
-}
-
-function viewByCategory() {
-	$("#task_search a").on("click", function(e) {
-		e.preventDefault()
-		const categoryName = $(this).html()
-		$.get(`${this.href}.json`, function(TasksData) {
-			let tasks = []
-			TasksData.forEach(function(taskData) {
-				let task = new Task(taskData)
-				tasks.push(task)
-			})
-			$("#task_header").html(categoryName)
-			$("#list_tasks").empty()
-			listTasks(tasks)
-		})
 	})
 }
 
