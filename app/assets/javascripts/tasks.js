@@ -4,6 +4,8 @@ $(function () {
 	renderNewTaskForm()
 	deleteTask()
 	viewTasks()
+	updateTask()
+	viewByCategory()
 })
 
 //Objects
@@ -202,9 +204,9 @@ function viewTasks() {
 			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
 			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm">Update</button>`
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn">Update</button>`
 			taskHTML += `<button type="button" class="btn btn-danger btn-sm">Delete</button>`
-
+			//Complete, Update, and Delete do not work on viewTasks()
 			$("#list_tasks").html(taskHTML)
 			$("#task_header").html(task.name)
 			$("#view_all_tasks").remove()
@@ -215,5 +217,39 @@ function viewTasks() {
 function updateTask() {
 	$(".update_btn").on("click", function(e) {
 		debugger
+	})
+}
+
+function viewByCategory() {
+	$("#task_search a").on("click", function(e) {
+		e.preventDefault()
+		const categoryName = $(this).html()
+		const categoryJSON = this.href + ".json"
+		$.get(categoryJSON, function(TasksData) {
+			let tasks = []
+			TasksData.forEach(function(taskData) {
+				let task = new Task(taskData)
+				tasks.push(task)
+			})
+
+			$("#task_header").html(categoryName)
+
+			$("#list_tasks").empty()
+
+			tasks.forEach(function(task) {
+				taskHTML = `<li>`
+				taskHTML += `<b>Name:</b> ${task.name}<br>`
+				// taskHTML += `<b>Categories:</b> ${listCategories()}<br>`
+				// taskHTML += `<b>Description:</b> ${task.description}<br>`
+				// taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
+				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+				taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
+				taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
+				taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
+				taskHTML += `</li>`
+
+				$("#list_tasks").append(taskHTML)
+			})
+		})
 	})
 }
