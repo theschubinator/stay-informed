@@ -68,7 +68,6 @@ function loadAllTasksAfterThree(tasksJSON) {
 			tasks.push(taskObj)
 		}
 	}
-
 	$("#list_tasks").append(listTasks(tasks))
 	$("#view_all_tasks").remove()
 }
@@ -93,26 +92,9 @@ function viewByCategory() {
 function viewTask() {
 	$(".view_btn").on("click", function(e) {
 		const task_id = $(this).data("task_id")
-
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			let task = new Task(taskData)
-
-			function listCategories() {
-				let categories = []
-				task.categories.forEach(function (category) {
-					categories.push(category.name)
-				})
-				return categories.join(", ")
-			}
-
-			taskHTML = `<b>Categories:</b> ${listCategories()}<br>`
-			taskHTML += `<b>Description:</b> ${task.description}<br>`
-			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
-			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
-			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn">Update</button>`
-			taskHTML += `<button type="button" class="btn btn-danger btn-sm">Delete</button>`
-			//Complete, Update, and Delete do not work on viewTasks()
+			taskHTML = listTasks(task)
 			$("#list_tasks").html(taskHTML)
 			$("#task_header").html(task.name)
 			$("#view_all_tasks").remove()
@@ -120,16 +102,28 @@ function viewTask() {
 	})
 }
 
-function listTasks(tasks) {
-	tasks.forEach(function(task) {
-		taskHTML = `<li>`
-		taskHTML += `<b>Name:</b> ${task.name}<br>`
-		taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
-		taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
-		taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
-		taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
-		taskHTML += `</li>`
-	})
+function listTasks(tasks) {	
+	let taskHTML = "" 
+	if (tasks.length) {
+		tasks.forEach(function(task) {
+			taskHTML = `<li>`
+			taskHTML += `<b>Name:</b> ${task.name}<br>`
+			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm">View</button>`
+			taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
+			taskHTML += `</li>`
+		})
+	} else {
+			taskHTML = `<b>Categories:</b> ${listCategoryNames(tasks)}<br>`
+			taskHTML += `<b>Description:</b> ${tasks.description}<br>`
+			taskHTML += `<b>Added By:</b> ${tasks.user.email}<br>`
+			taskHTML += `<b>Due Date:</b> ${tasks.due()}<br>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn">Update</button>`
+			taskHTML += `<button type="button" class="btn btn-danger btn-sm">Delete</button>`
+			//Complete, Update, and Delete do not work on viewTasks()
+		}
 	return taskHTML
 }
 
