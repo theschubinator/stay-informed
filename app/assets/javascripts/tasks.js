@@ -94,7 +94,7 @@ function loadMoreTasks() {
 }
 
 function completeTask() {
-	$(".btn-success").on("click", function(e) {
+	$(".complete_btn").on("click", function(e) {
 		const user_id = $(this).data("user_id")
 		const task_id = $(this).data("task_id")
 
@@ -120,14 +120,15 @@ function renderNewTaskForm() {
 			saveNewTask()
 		})
 		$("#new_task_btn").remove()
-		// renderNewCategoryField()
+		// renderNewCategoryField() // Form has not been rendered to HTML yet.
 	})
 }
 
+// How can I add this function into my renderNewTaskForm()????
+
 // function renderNewCategoryField() {
-// 	$("#test").on("click", function(e) {
-// 		debugger
-// 		html = `<p>New Category 1:
+// 	$("#render_new_category_textarea").on("click", function(e) {
+// 		html = `<p>New Category:
 //   	<%= f.fields_for :categories, @task.categories.build do |category| %>
 //     <%= category.text_field :name, size: "25" %>
 //   	<% end %><br><br></p>`
@@ -165,7 +166,7 @@ function saveNewTask() {
 }
 
 function deleteTask() {
-	$(".btn-danger").on("click", function(e) {
+	$(".delete_btn").on("click", function(e) {
 		const user_id = $(this).data("user_id")
 		const task_id = $(this).data("task_id")
 
@@ -201,11 +202,18 @@ function viewTasks() {
 			taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
 			taskHTML += `<button type="button" class="btn btn-success btn-sm">Complete</button> `
-			taskHTML += ` <button type="button" class="btn btn-danger btn-sm">Delete</button><br><br>`
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm">Update</button>`
+			taskHTML += `<button type="button" class="btn btn-danger btn-sm">Delete</button>`
 
 			$("#list_tasks").html(taskHTML)
 			$("#task_header").html(task.name)
 			$("#view_all_tasks").remove()
 		})
+	})
+}
+
+function updateTask() {
+	$(".update_btn").on("click", function(e) {
+		debugger
 	})
 }
