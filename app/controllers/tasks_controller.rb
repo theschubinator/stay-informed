@@ -7,6 +7,8 @@ class TasksController < ApplicationController
 		  	f.html {render :index}
 		  	f.json {render json: @incomplete_tasks}
 		  end
+
+		  # render json: @incomplete_tasks
 		  # @completed_tasks = Task.completed(user_tasks)
 		else
 			flash[:alert] = "You do not have the authorization to view this page."
