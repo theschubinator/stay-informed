@@ -120,8 +120,20 @@ function renderNewTaskForm() {
 			saveNewTask()
 		})
 		$("#new_task_btn").remove()
+		// renderNewCategoryField()
 	})
 }
+
+// function renderNewCategoryField() {
+// 	$("#test").on("click", function(e) {
+// 		debugger
+// 		html = `<p>New Category 1:
+//   	<%= f.fields_for :categories, @task.categories.build do |category| %>
+//     <%= category.text_field :name, size: "25" %>
+//   	<% end %><br><br></p>`
+// 		("#rendered_new_category_form").html(html)
+// 	})
+// }
 
 function saveNewTask() {
 	$("form").on("submit", function(e) {
@@ -169,7 +181,7 @@ function deleteTask() {
 }
 
 function viewTasks() {
-	$(".btn-primary").on("click", function(e) {
+	$(".view_btn").on("click", function(e) {
 		const user_id = $(this).data("user_id")
 		const task_id = $(this).data("task_id")
 

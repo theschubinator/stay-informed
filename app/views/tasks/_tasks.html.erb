@@ -19,7 +19,7 @@
   <% else %>
     <button type="button" class="btn btn-success btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Complete</button> 
   <% end %>
-  <button type="button" class="btn btn-primary btn-sm" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>View</button> 
+  <button type="button" class="btn btn-primary btn-sm view_btn" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>View</button> 
   <button type="button" class="btn btn-danger btn-sm"  data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Delete</button><br><br>
 <% end %>
 </ol>
