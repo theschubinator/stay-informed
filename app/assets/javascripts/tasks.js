@@ -23,31 +23,24 @@ Task.prototype.due = function() {
 	let date = new Date ($(this)[0].due_date)
 	const days = ["Sun.", "Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
 	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
 	const day = days[date.getDay()]
 	const dayOfMonth = date.getDate()
 	const month = months[date.getMonth()]
 	const year = date.getFullYear()
+	const time = formatTime(date)
+	return `${day} ${month}, ${dayOfMonth} ${year} at ${time}`
+}
+
+function formatTime(date) {
 	const hours = date.getHours()
 	const minutes = date.getMinutes()
-
 	let formattedMinutes = ""
 	let totalTime = ""
-
-	if(minutes < 10) {
-		formattedMinutes = `0${minutes}`
-	} else {
-		formattedMinutes = `${minutes}`
-	}
-
-	if(hours > 12) {
-		totalTime = `${hours - 12}:${formattedMinutes}PM`
-	} else {
-		totalTime = `${hours}:${formattedMinutes}AM`
-	}
-
-	return `${day} ${month}, ${dayOfMonth} ${year} at ${totalTime}`
+	minutes < 10 ? formattedMinutes = `0${minutes}` : formattedMinutes = `${minutes}`
+	hours > 12 ? totalTime = `${hours - 12}:${formattedMinutes}PM` : totalTime = `${hours}:${formattedMinutes}AM`
+	return totalTime
 }
+
 // ******************** //
 
 function loadMoreTasks() {
@@ -95,9 +88,10 @@ function viewTask() {
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			let task = new Task(taskData)
 			taskHTML = listTasks(task)
+			$("#view_all_tasks").remove()
 			$("#list_tasks").html(taskHTML)
 			$("#task_header").html(task.name)
-			$("#view_all_tasks").remove()
+			
 		})
 	})
 }
@@ -180,15 +174,14 @@ function listCategoryNames(task) {
 
 function completeTask() {
 	$(".complete_btn").on("click", function(e) {
-		const user_id = $(this).data("user_id")
 		const task_id = $(this).data("task_id")
 
-		$.get(`/users/${user_id}/tasks/${task_id}.json`, function(taskData) {
+		$.get(`tasks/${task_id}.json`, function(taskData) {
 			const task = new Task(taskData)
 			task.complete ? task.complete = false : task.complete = true
 			$.ajax({
 				type: "PATCH",
-				url: `/users/${user_id}/tasks/${task_id}`,
+				url: `tasks/${task_id}`,
 				data: JSON.stringify(task),
 				contentType: "application/json",
 				dataType: "json",
