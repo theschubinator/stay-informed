@@ -12,7 +12,7 @@
     <%= category.text_field :name, size: "25" %>
   <% end %><br><br></p>
 
-  <a href="#" class="render_new_category_textarea">New Category</a><br>
+  <a href="#" class="render_new_category_textarea" onclick="renderNewCategoryField(); return false">New Category</a><br>
   <p id="rendered_new_category_form"></p>
 
   <%= f.label :description %><br>
