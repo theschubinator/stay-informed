@@ -46,7 +46,7 @@ function formatTime(date) {
 function loadMoreTasks() {
 	$("#view_all_tasks").on("click", function(e) {
 		e.preventDefault()
-		$.get(`/users/1/tasks.json`, function (tasksJSON) {
+		$.get(`tasks.json`, function (tasksJSON) {
 			loadAllTasksAfterThree(tasksJSON)
 		}).done(function(e) {
 				completeTask()
