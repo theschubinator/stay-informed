@@ -4,7 +4,7 @@ $(function () {
 	renderNewTaskForm()
 	deleteTask()
 	viewTask()
-	updateTask()
+	editTask()
 	viewByCategory()
 })
 
@@ -51,7 +51,7 @@ function loadMoreTasks() {
 		}).done(function(e) {
 				completeTask()
 				deleteTask()
-				updateTask()
+				editTask()
 				viewTask()
 			})
 	})	
@@ -82,20 +82,11 @@ function viewByCategory() {
 			$("#task_header").html(categoryName)
 			$("#list_tasks").empty()
 			$("#list_tasks").append(listTasks(tasks))
-		})
-	})
-}
-
-function viewTask() {
-	$(".view_btn").on("click", function(e) {
-		const task_id = $(this).data("task_id")
-		$.get(`tasks/${task_id}.json`, function(taskData) {
-			let task = new Task(taskData)
-			let taskHTML = listTasks(task)
-			$("#view_all_tasks").remove()
-			$("#list_tasks").html(taskHTML)
-			$("#task_header").html(task.name)
-			
+		}).done(function(){
+				completeTask()
+				deleteTask()
+				editTask()
+				viewTask()
 		})
 	})
 }
@@ -130,20 +121,26 @@ function listTasks(tasks) {
 
 function renderNewTaskForm() {
 	$("#new_task_btn").on("click", function(e) {
-		let user_id = 1 // hard_coded!!!!
 		$.get(`tasks/new`, function(html) {
 			$("#render_new_form").html(html)
 			saveNewTask()
 		})
 		$("#new_task_btn").remove()
- // Form has not been rendered to HTML yet.
 	})
 }
 
-// How can I add this function into my renderNewTaskForm()????
-
 function renderNewCategoryField() {
-		alert("I was clicked")
+	let i = 1
+	renderForm()
+	function renderForm() {
+		if ($(`#${i}`).length === 0) {
+			let categoryForm = `<p> New Category: <input size=25 type=text name=task[categories_attributes[${i}][name] id=task_categories_attributes_[${i}]_name><input type="hidden" id=${i}></p>`
+			$("#rendered_new_category_form").append(categoryForm)
+		} else if ($(`#${i}`).length === 1) {
+			i++
+			renderForm()
+		}	
+	}
 }
 
 function saveNewTask() {
@@ -161,11 +158,21 @@ function saveNewTask() {
 				taskHTML += `<b>Description:</b> ${task.description}<br>`
 				taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+				taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${task.id}" onclick="edit_new_task()">Edit</button>`
+				taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${task.id}" onclick="delete_new_task()">Delete</button>`
 
 				$("#render_new_form").html(taskHTML)
 			})
 		})
 	})
+}
+
+function edit_new_task() {
+	alert("edit was clicked")
+}
+
+function delete_new_task() {
+	alert("delete was clicked")
 }
 
 function listCategoryNames(task) {
@@ -174,6 +181,20 @@ function listCategoryNames(task) {
 		categories.push(category.name)
 	})
 	return categories.join(", ")
+}
+
+function viewTask() {
+	$(".view_btn").on("click", function(e) {
+		const task_id = $(this).data("task_id")
+		$.get(`tasks/${task_id}.json`, function(taskData) {
+			let task = new Task(taskData)
+			let taskHTML = listTasks(task)
+			$("#view_all_tasks").remove()
+			$("#list_tasks").html(taskHTML)
+			$("#task_header").html(task.name)
+			
+		})
+	})
 }
 
 function completeTask() {
@@ -203,7 +224,7 @@ function deleteTask() {
 	})
 }
 
-function updateTask() {
+function editTask() {
 	$(".update_btn").on("click", function(e) {
 		debugger
 	})

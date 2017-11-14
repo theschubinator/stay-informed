@@ -98,6 +98,7 @@ class TasksController < ApplicationController
 
 	private
 	  def task_params
+	  	# binding.pry
 	  	params.require(:task).permit(:name, :description, :complete, :"due_date(1i)", :"due_date(2i)", :"due_date(3i)", :"due_date(4i)", :"due_date(5i)", category_ids: [], categories_attributes: [:name], join_description: [:description])
 	  end
 

@@ -5,7 +5,7 @@ class Task < ApplicationRecord
     # accepts_nested_attributes_for :categories
 
 	validates :name, :description, :categories, presence: true
-	#validate :date?
+	validate :date?
 
 	## validations ##
 	def date?
