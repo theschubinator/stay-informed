@@ -158,8 +158,8 @@ function saveNewTask() {
 				taskHTML += `<b>Description:</b> ${task.description}<br>`
 				taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
 				taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
-				taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${task.id}" onclick="edit_new_task()">Edit</button>`
-				taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${task.id}" onclick="delete_new_task()">Delete</button>`
+				taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" id=edit_new data-task_id=${task.id}" onclick="edit_new_task()">Edit</button>`
+				taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" id=delete_new data-task_id=${task.id} onclick="delete_new_task()">Delete</button>`
 
 				$("#render_new_form").html(taskHTML)
 			})
@@ -172,7 +172,10 @@ function edit_new_task() {
 }
 
 function delete_new_task() {
-	alert("delete was clicked")
+	const task_id = $("#delete_new").data("task_id")
+		$.get(`tasks/${task_id}.json`, function(taskData) {
+			$.ajax({type: "DELETE", url: `tasks/${task_id}`})
+		}).done(function() {$("#render_new_form").html("Task Successfully Deleted")})
 }
 
 function listCategoryNames(task) {
