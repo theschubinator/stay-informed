@@ -2,17 +2,7 @@
 <% tasks.each do |task| %>
   <li>
   <b>Name:</b> <%= task.name %><br>
-  <!-- <b>Categories:</b> <%= list_task_categories(task) %><br>
-  <b>Description:</b> <%= task.description %><br>
 
-  <% if !(task.category_tasks.first.description == nil) %>
-    <b>Additional Details: </b><%= task.category_tasks.first.description %><br>
-  <% end %>
-  <b>Added By:</b> <%= task_added_by?(task) %><br>
-  <b>Due Date:</b> <%= task.formatted_date(task.due_date) %> - 
-  <%= link_to "View Task", user_task_path(current_user, task), class: "view_task" %> |
-  <%= link_to "Delete Task",  user_task_path(current_user, task), method: :delete, class: "delete_task" %></li><br>
-  <b>Added By:</b> <%= task_added_by?(task) %><br> -->
   <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br>
   <% if task.complete %>
     <button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=<%=task.id%>>Mark Incomplete</button> 

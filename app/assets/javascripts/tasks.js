@@ -49,11 +49,12 @@ function loadMoreTasks() {
 		$.get(`/users/1/tasks.json`, function (tasksJSON) {
 			loadAllTasksAfterThree(tasksJSON)
 		}).done(function(e) {
-			// completeTask() // does not work!!!
+				completeTask()
+				deleteTask()
+				updateTask()
+				viewTask()
 			})
-		// completeTask() // also does not work!!!
 	})	
-	// completeTask() // also does not work!!!
 }
 
 function loadAllTasksAfterThree(tasksJSON) {
@@ -90,7 +91,7 @@ function viewTask() {
 		const task_id = $(this).data("task_id")
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			let task = new Task(taskData)
-			taskHTML = listTasks(task)
+			let taskHTML = listTasks(task)
 			$("#view_all_tasks").remove()
 			$("#list_tasks").html(taskHTML)
 			$("#task_header").html(task.name)
@@ -106,9 +107,9 @@ function listTasks(tasks) {
 			taskHTML = `<li>`
 			taskHTML += `<b>Name:</b> ${task.name}<br>`
 			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
-			taskHTML += `<button type="button" class="btn btn-success btn-sm data-task_id=${task.id}">Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm data-task_id=${task.id}">View</button>`
-			taskHTML += ` <button type="button" class="btn btn-danger btn-sm data-task_id=${task.id}">Delete</button><br><br>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${task.id}">Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm view_btn" data-task_id=${task.id}">View</button>`
+			taskHTML += ` <button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${task.id}">Delete</button><br><br>`
 			taskHTML += `</li>`
 			$("#list_tasks").append(taskHTML)
 		})
@@ -119,9 +120,9 @@ function listTasks(tasks) {
 			taskHTML += `<b>Description:</b> ${tasks.description}<br>`
 			taskHTML += `<b>Added By:</b> ${tasks.user.email}<br>`
 			taskHTML += `<b>Due Date:</b> ${tasks.due()}<br>`
-			taskHTML += `<button type="button" class="btn btn-success btn-sm" data-task_id=${task.id}>Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn data-task_id=${task.id}">Update</button>`
-			taskHTML += `<button type="button" class="btn btn-danger btn-sm data-task_id=${task.id}">Delete</button>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${tasks.id}>Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${tasks.id}">Update</button>`
+			taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${tasks.id}">Delete</button>`
 			//Complete, Update, and Delete do not work on viewTasks()
 		}
 	return taskHTML
@@ -135,17 +136,14 @@ function renderNewTaskForm() {
 			saveNewTask()
 		})
 		$("#new_task_btn").remove()
-		renderNewCategoryField() // Form has not been rendered to HTML yet.
+ // Form has not been rendered to HTML yet.
 	})
 }
 
 // How can I add this function into my renderNewTaskForm()????
 
 function renderNewCategoryField() {
-	$(".render_new_category_textarea").on("click", function(e) {
-		e.preventDefault()
-		debugger
-	})
+		alert("I was clicked")
 }
 
 function saveNewTask() {
