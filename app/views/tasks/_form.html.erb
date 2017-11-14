@@ -1,6 +1,8 @@
   <%= f.label :name %>
   <%= f.text_field :name, size: "34" %><br><br>
-  Categories: <%= f.collection_check_boxes :category_ids, current_user.categories.uniq, :id, :name %><br><br>
+  <% if current_user.categories.length > 0 %>
+    Categories: <%= f.collection_check_boxes :category_ids, current_user.categories.uniq, :id, :name %><br><br>
+  <% end %>
   
   <div id="rendered_new_category_form">
     <p>New Category:
