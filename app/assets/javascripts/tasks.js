@@ -101,7 +101,7 @@ function viewTask() {
 
 function listTasks(tasks) {	
 	let taskHTML = "" 
-	if (tasks.length) {
+	if (tasks.length && tasks.length > 0) {
 		tasks.forEach(function(task) {
 			taskHTML = `<li>`
 			taskHTML += `<b>Name:</b> ${task.name}<br>`
@@ -112,6 +112,8 @@ function listTasks(tasks) {
 			taskHTML += `</li>`
 			$("#list_tasks").append(taskHTML)
 		})
+	} else if (tasks.length === 0) {
+		$("#list_tasks").append("You are already viewing all current tasks.")
 	} else {
 			taskHTML = `<b>Categories:</b> ${listCategoryNames(tasks)}<br>`
 			taskHTML += `<b>Description:</b> ${tasks.description}<br>`
@@ -189,7 +191,7 @@ function completeTask() {
 				data: JSON.stringify(task),
 				contentType: "application/json",
 				dataType: "json",
-			})
+			}).done(function() {location.reload()})
 		})	
 	})
 }
@@ -199,7 +201,7 @@ function deleteTask() {
 		const task_id = $(this).data("task_id")
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			$.ajax({type: "DELETE", url: `tasks/${task_id}`})
-		})	
+		}).done(function() {location.reload()})
 	})
 }
 

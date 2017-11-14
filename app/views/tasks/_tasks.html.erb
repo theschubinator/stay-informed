@@ -15,11 +15,11 @@
   <b>Added By:</b> <%= task_added_by?(task) %><br> -->
   <b>Due Date:</b> <%= task.formatted_date(task.due_date) %><br>
   <% if task.complete %>
-    <button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Mark Incomplete</button> 
+    <button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=<%=task.id%>>Mark Incomplete</button> 
   <% else %>
-    <button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Complete</button> 
+    <button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=<%=task.id%>>Complete</button> 
   <% end %>
-  <button type="button" class="btn btn-primary btn-sm view_btn" data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>View</button> 
-  <button type="button" class="btn btn-danger btn-sm delete_btn"  data-task_id=<%=task.id%> data-user_id=<%=current_user.id%>>Delete</button><br><br>
+  <button type="button" class="btn btn-primary btn-sm view_btn" data-task_id=<%=task.id%>>View</button> 
+  <button type="button" class="btn btn-danger btn-sm delete_btn"  data-task_id=<%=task.id%>>Delete</button><br><br>
 <% end %>
 </ol>
