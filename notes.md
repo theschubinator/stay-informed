@@ -1,8 +1,6 @@
 Issues::
 
-1) New Category won't display until the second click...then activates 2 times.
-
-3) The time in the Form is not lining up with the time that actually is being saved. The Form shows the time 7 hours ahead of the real time. 
+1) Task won't update...despite showing its updated in console.
 
 
 

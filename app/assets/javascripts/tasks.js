@@ -207,7 +207,6 @@ function viewTask() {
 function completeTask() {
 	$(".complete_btn").on("click", function(e) {
 		const task_id = $(this).data("task_id")
-
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			const task = new Task(taskData)
 			task.complete ? task.complete = false : task.complete = true
@@ -236,8 +235,6 @@ function editTask() {
 		const task_id = $(this).data("task_id")
 		$.get(`tasks/${task_id}/edit`, function(html) {
 			$("#render_new_form").html(html)
-			saveNewTask()
 		})
-		$("#new_task_btn").remove()
 	})
 }

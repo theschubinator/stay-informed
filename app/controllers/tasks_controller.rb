@@ -68,10 +68,9 @@ class TasksController < ApplicationController
 	  if user_authorized?
 		find_task
 		@task.update(task_params)
-		render json: @task
-		# redirect_to user_tasks_path(current_user)
+		redirect_to user_tasks_path(current_user)
 	  else
-	  	flash[:alert] = "You do not have the authorization to view this page."
+	  flash[:alert] = "You do not have the authorization to view this page."
 		redirect_to root_path
 	  end
 	end
@@ -98,7 +97,6 @@ class TasksController < ApplicationController
 
 	private
 	  def task_params
-	  	# binding.pry
 	  	params.require(:task).permit(:name, :description, :complete, :"due_date(1i)", :"due_date(2i)", :"due_date(3i)", :"due_date(4i)", :"due_date(5i)", category_ids: [], categories_attributes: [:name], join_description: [:description])
 	  end
 
