@@ -17,6 +17,7 @@ function Task(data) {
 	this.due_date = data.due_date
 	this.categories = data.categories
 	this.user = data.user
+	this.grouped = data.grouped
 }
 
 Task.prototype.due = function() {
@@ -29,6 +30,10 @@ Task.prototype.due = function() {
 	const year = date.getFullYear()
 	const time = formatTime(date)
 	return `${day} ${month}, ${dayOfMonth} ${year} at ${time}`
+}
+
+Task.prototype.added_By = function() {
+	return $(this)[0].grouped ? "Admin" : $(this)[0].user.email
 }
 
 function formatTime(date) {
@@ -109,7 +114,7 @@ function listTasks(tasks) {
 	} else {
 			taskHTML = `<b>Categories:</b> ${listCategoryNames(tasks)}<br>`
 			taskHTML += `<b>Description:</b> ${tasks.description}<br>`
-			taskHTML += `<b>Added By:</b> ${tasks.user.email}<br>`
+			taskHTML += `<b>Added By:</b> ${tasks.added_By()}<br>`
 			taskHTML += `<b>Due Date:</b> ${tasks.due()}<br>`
 			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${tasks.id}>Complete</button> `
 			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${tasks.id}>Edit</button>`
