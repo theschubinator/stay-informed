@@ -98,8 +98,8 @@ function listTasks(tasks) {
 			taskHTML = `<li>`
 			taskHTML += `<b>Name:</b> ${task.name}<br>`
 			taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
-			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${task.id}">Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm view_btn" data-task_id=${task.id}">View</button>`
+			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${task.id}>Complete</button> `
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm view_btn" data-task_id=${task.id}>View</button>`
 			taskHTML += ` <button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${task.id}">Delete</button><br><br>`
 			taskHTML += `</li>`
 			$("#list_tasks").append(taskHTML)
@@ -112,8 +112,8 @@ function listTasks(tasks) {
 			taskHTML += `<b>Added By:</b> ${tasks.user.email}<br>`
 			taskHTML += `<b>Due Date:</b> ${tasks.due()}<br>`
 			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${tasks.id}>Complete</button> `
-			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${tasks.id}">Update</button>`
-			taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${tasks.id}">Delete</button>`
+			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${tasks.id}>Edit</button>`
+			taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${tasks.id}>Delete</button>`
 			//Complete, Update, and Delete do not work on viewTasks()
 		}
 	return taskHTML
@@ -196,6 +196,10 @@ function viewTask() {
 			$("#list_tasks").html(taskHTML)
 			$("#task_header").html(task.name)
 			
+		}).done(function() {
+			editTask()
+			completeTask()
+			deleteTask()
 		})
 	})
 }
@@ -229,6 +233,11 @@ function deleteTask() {
 
 function editTask() {
 	$(".update_btn").on("click", function(e) {
-		debugger
+		const task_id = $(this).data("task_id")
+		$.get(`tasks/${task_id}/edit`, function(html) {
+			$("#render_new_form").html(html)
+			saveNewTask()
+		})
+		$("#new_task_btn").remove()
 	})
 }
