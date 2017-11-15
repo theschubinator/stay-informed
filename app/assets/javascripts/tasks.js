@@ -183,7 +183,7 @@ function editTask() {
 					taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" id=edit_new data-task_id=${task.id}" onclick="edit_new_task()">Edit</button>`
 					taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" id=delete_new data-task_id=${task.id} onclick="delete_new_task()">Delete</button>`
 
-				$("#render_new_form").html("Task Updated Successfully!")
+				$("#render_new_form").html("<p id='task_submission_alert'>Task Updated Successfully!</p>")
 				$("#list_tasks").html(taskHTML)
 				$("#task_header").html(task.name)	
 				})
@@ -203,7 +203,7 @@ function delete_new_task() {
 	const task_id = $("#delete_new").data("task_id")
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			$.ajax({type: "DELETE", url: `tasks/${task_id}`})
-		}).done(function() {$("#render_new_form").html("Task Successfully Deleted")})
+		}).done(function() {$("#render_new_form").html("<p id=task_deletion_alert>Task Successfully Deleted</p>")})
 }
 
 function listCategoryNames(task) {
