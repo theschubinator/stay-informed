@@ -1,10 +1,16 @@
-<ol>
-<% @tasks.each do |task| %>
- <li>
- Name:<%= task.name %><br>
- Descrption: <%= task.description %><br>
- User: <%= task.user.email %><br>
- Complete: <%= task.complete %><br>
-  </li><br><br>
-<% end %>
-</ol>
+<div class="container" id="grouped_tasks">
+	<div class="row">
+		<div class="col-sm-12">
+			<ol>
+			<% @tasks.each do |task| %>
+			 <li>
+				 <b>Name:</b> <%= task.name %><br>
+				 <b>Descrption:</b> <%= task.description %><br>
+				 <b>User:</b> <%= task.user.email %><br>
+				 <b>Complete:</b> <%= task.complete %><br>
+			  </li><br><br>
+			<% end %>
+			</ol>
+		</div>
+	</div>
+</div>

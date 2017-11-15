@@ -1,3 +1,12 @@
-<h1>Users</h1>
+<%= render "users/admin_tools" if current_user.admin? %>
 
-<%= render "show_users" %>
+<div class="container">
+	<div class="row">
+		<div class="col-sm_12">
+			<h1 class="welcome">Users</h1>
+		</div>
+		<div class="col-sm_12">
+			<%= render "show_users" %>
+		</div>
+	</div>
+</div>

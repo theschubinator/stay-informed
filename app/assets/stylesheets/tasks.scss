@@ -53,6 +53,21 @@
 	border-color: black;
 }
 
+#group_task {
+	margin: auto;
+	padding: 0 0 10px 10px;
+	margin: 30px 240px 10px 240px;
+}
+
+#group_task h1 {
+	text-align: center;
+}
+
+/*#group_task_form {
+	background-color: #114a77 ;
+	margin: 200px;
+}*/
+
 .new_task_form h1 {
 	margin-left: 12px;
 	margin-bottom: 30px;
@@ -79,6 +94,10 @@
 #more_categories {
 	color: white;
 	font-size: 10px;
+}
+
+#grouped_tasks {
+	margin: 30px 0 0 0;
 }
 
 
