@@ -7,9 +7,6 @@ class TasksController < ApplicationController
 		  	f.html {render :index}
 		  	f.json {render json: @incomplete_tasks}
 		  end
-
-		  # render json: @incomplete_tasks
-		  # @completed_tasks = Task.completed(user_tasks)
 		else
 			flash[:alert] = "You do not have the authorization to view this page."
 			redirect_to root_path
@@ -21,7 +18,7 @@ class TasksController < ApplicationController
 		  @task = Task.new
 		  render layout: false
 		else
-		  	flash[:alert] = "You do not have the authorization to view this page."
+		  flash[:alert] = "You do not have the authorization to view this page."
 			redirect_to root_path
 		end
 	end

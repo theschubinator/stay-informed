@@ -168,7 +168,10 @@ function saveNewTask() {
 }
 
 function edit_new_task() {
-	alert("edit was clicked")
+	const task_id = $("#edit_new").data("task_id")
+	$.get(`tasks/${task_id}/edit`, function(html) {
+		$("#render_new_form").html(html)
+	})
 }
 
 function delete_new_task() {
