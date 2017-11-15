@@ -1,6 +1,16 @@
-<h1><%= @user.email %></h1>
-<p>Current Status: <%= @user.role %> </p>
+<h1 class="welcome"><%= @user.email %></h1>
 
-<%= form_for @user do |f| %>
-  <%= render 'admin_status', f: f %>
-<% end %>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<p>Current Status: <%= @user.role %> </p>
+		</div>
+	</div>
+		<div class="row">
+		<div class="col-sm-12">
+			<%= form_for @user do |f| %>
+		  <%= render 'admin_status', f: f %>
+			<% end %>
+		</div>
+	</div>
+</div>
