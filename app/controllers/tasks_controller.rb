@@ -28,7 +28,6 @@ class TasksController < ApplicationController
 		  @task = user_tasks.build(task_params)
 		  if @task.save
 		  	render json: @task, status:201
-		    # redirect_to user_tasks_path(current_user)
 		  else
 	        flash[:alert] = @task.errors.full_messages.join(" & ")
 					render 'new'
@@ -65,7 +64,12 @@ class TasksController < ApplicationController
 	  if user_authorized?
 		find_task
 		@task.update(task_params)
-		redirect_to user_tasks_path(current_user)
+		# respond_to do |f|
+		# 	f.html {render :show}
+		# 	f.json {render json: @task}
+		# end
+		render json: @task, status: 201
+		# redirect_to user_tasks_path(current_user)
 	  else
 	  flash[:alert] = "You do not have the authorization to view this page."
 		redirect_to root_path

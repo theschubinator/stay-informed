@@ -4,7 +4,7 @@ $(function () {
 	renderNewTaskForm()
 	deleteTask()
 	viewTask()
-	editTask()
+	// editTask()
 	viewByCategory()
 })
 
@@ -114,9 +114,8 @@ function listTasks(tasks) {
 			taskHTML += `<button type="button" class="btn btn-success btn-sm complete_btn" data-task_id=${tasks.id}>Complete</button> `
 			taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" data-task_id=${tasks.id}>Edit</button>`
 			taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" data-task_id=${tasks.id}>Delete</button>`
-			//Complete, Update, and Delete do not work on viewTasks()
+			return taskHTML
 		}
-	return taskHTML
 }
 
 function renderNewTaskForm() {
@@ -167,6 +166,32 @@ function saveNewTask() {
 	})
 }
 
+function editTask() {
+	$(".update_btn").on("click", function(e) {
+		const task_id = $(this).data("task_id")
+		$.get(`tasks/${task_id}/edit`, function(html) {
+			$("#render_new_form").html(html)
+			$("form").on("submit", function(e) {
+				e.preventDefault()
+				let taskData = $(this).serialize()
+				$.post(`tasks/${task_id}`, taskData).done(function(data) {
+					let task = new Task(data)
+					taskHTML = `<b>Categories:</b> ${listCategoryNames(task)}<br>`
+					taskHTML += `<b>Description:</b> ${task.description}<br>`
+					taskHTML += `<b>Added By:</b> ${task.user.email}<br>`
+					taskHTML += `<b>Due Date:</b> ${task.due()}<br>`
+					taskHTML += `<button type="button" class="btn btn-primary btn-sm update_btn" id=edit_new data-task_id=${task.id}" onclick="edit_new_task()">Edit</button>`
+					taskHTML += `<button type="button" class="btn btn-danger btn-sm delete_btn" id=delete_new data-task_id=${task.id} onclick="delete_new_task()">Delete</button>`
+
+				$("#render_new_form").html("Task Updated Successfully!")
+				$("#list_tasks").html(taskHTML)
+				$("#task_header").html(task.name)	
+				})
+			})
+		})
+	})
+}
+
 function edit_new_task() {
 	const task_id = $("#edit_new").data("task_id")
 	$.get(`tasks/${task_id}/edit`, function(html) {
@@ -197,8 +222,7 @@ function viewTask() {
 			let taskHTML = listTasks(task)
 			$("#view_all_tasks").remove()
 			$("#list_tasks").html(taskHTML)
-			$("#task_header").html(task.name)
-			
+			$("#task_header").html(task.name)			
 		}).done(function() {
 			editTask()
 			completeTask()
@@ -230,14 +254,5 @@ function deleteTask() {
 		$.get(`tasks/${task_id}.json`, function(taskData) {
 			$.ajax({type: "DELETE", url: `tasks/${task_id}`})
 		}).done(function() {location.reload()})
-	})
-}
-
-function editTask() {
-	$(".update_btn").on("click", function(e) {
-		const task_id = $(this).data("task_id")
-		$.get(`tasks/${task_id}/edit`, function(html) {
-			$("#render_new_form").html(html)
-		})
 	})
 }
