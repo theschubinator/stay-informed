@@ -1,3 +1,31 @@
-// Place all the styles related to the static controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#static_header {
+	text-align: center;
+	border-style: solid;
+	border-color: black;
+	border-width: thick;
+	background-color: #114a77;
+	color: #FFFFFF;
+	padding: 10px 0px;
+}
+
+h3 {
+	background-color: #ededed;
+	padding: 8px;
+	text-align: center;
+}
+
+p {
+	padding: 10px;
+}
+
+ul {
+	padding: 10px;
+	margin-left: 10px;
+}
+
+#home_info {
+
+	border-style: double;
+	margin-top: -13px;
+	padding: 0 16px;
+}

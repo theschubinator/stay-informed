@@ -77,6 +77,7 @@ function loadAllTasksAfterThree(tasksJSON) {
 function viewByCategory() {
 	$("#task_search a").on("click", function(e) {
 		e.preventDefault()
+		$("#render_new_form").remove()
 		const categoryName = $(this).html()
 		$.get(`${this.href}.json`, function(TasksData) {
 			let tasks = []
@@ -129,7 +130,7 @@ function renderNewTaskForm() {
 			$("#render_new_form").html(html)
 			saveNewTask()
 		})
-		$("#new_task_btn").remove()
+		// $("#new_task_btn").remove()
 	})
 }
 

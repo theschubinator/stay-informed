@@ -1,6 +1,6 @@
 Issues::
 
-1) Task won't update...despite showing its updated in console.
+1) Validations with AJAX requests...
 
 
 
