@@ -91,7 +91,7 @@ function viewByCategory() {
 		}).done(function(){
 				completeTask()
 				deleteTask()
-				editTask()
+				// editTask()
 				viewTask()
 		})
 	})
