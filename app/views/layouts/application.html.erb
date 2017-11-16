@@ -21,6 +21,7 @@
           <%= link_to "Sign Up", new_user_registration_path %>
         <% end %>
       </nav>
+      <%= render "users/admin_tools" if !!current_user && current_user.admin? %>
     <%= yield %>
   </body>
 </html>

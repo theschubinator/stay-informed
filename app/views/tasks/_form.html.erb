@@ -18,7 +18,7 @@
   <%= f.text_area :description, size: "40x2" %><br><br>
 
   <%= f.label :due_date %>:
-  <%= f.datetime_select :due_date, ampm: true, default: 1.hour.from_now %> <br><br>
+  <%= f.datetime_select :due_date, ampm: true, minute_step: 5, default: 1.hour.from_now %> <br><br>
 
   <!-- <p>Additional Details</p>
   <%= f.fields_for :join_description, @task.category_tasks.build do |category_task| %>
